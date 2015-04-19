@@ -8,8 +8,8 @@ class CAppTextScriptReader
 private:
 	HANDLE hFile;
 	BOOL IsActive;
-	BOOL _ExpectLetter(char lt);
 public:
+	BOOL _ExpectLetter(char lt);
 	CAppTextScriptReader();
 	BOOL InitTextScript(LPCSTR file);
 	BOOL ReadByte(CHAR *buffer, DWORD *numbuffer);

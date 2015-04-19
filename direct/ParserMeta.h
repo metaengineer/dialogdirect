@@ -20,11 +20,13 @@ protected:
 public:
 	LONG a;
 	LONG b;
-	std::string act;
+	LPSTR act;
+	UINT actlen;
 	int VarLink;
 	int Rqux;
 	int Rquy;
-	LPCSTR CtlName;
+	LPSTR CtlName;
+	UINT namelen;
 	std::list<std::pair<int,LPCSTR>> Hash;
 public:
 	CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname);
@@ -128,15 +130,18 @@ struct SMenuControls
 
 struct SFrameChain
 {
+	BOOL HasBg;
 	CBitmapTexture *back;
 	DWORD flags;
-	std::string fname;
+	LPSTR name;
+	DWORD namelen;
 	SMenuMenu *menu;
 	SMenuTabs *tabs;
 	SMenuList *list;
 	SMenuControls *ctrls;
 	SFrameChain *snext;
-	std::string bg;
+	DWORD bglen;
+	LPSTR bg;
 	SFrameChain(LPCSTR fn);
 	void Add(LPCSTR fn);
 	SFrameChain *Find(LPCSTR fn);

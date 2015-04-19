@@ -490,7 +490,7 @@ CBitmapTexture::CBitmapTexture(LPCSTR FileNoExt)
 	BOOL ld=FALSE;
 	std::string ring=std::string(FileNoExt);
 	std::string r;
-	r=ring+".tga";
+	r=ring+".bmp";
 	ld=UtilLoadBitmap(r.c_str(), &data1, &imagex, &imagey);
 	if(!ld)
 	{
@@ -498,7 +498,7 @@ CBitmapTexture::CBitmapTexture(LPCSTR FileNoExt)
 		ld=UtilLoadPCX(r.c_str(), &data1, &imagex, &imagey);
 		if(!ld)
 		{
-			r=ring+".bmp";
+			r=ring+".tga";
 			ld=UtilLoadTarga(r.c_str(), &data1, &imagex, &imagey);
 		}
 	}

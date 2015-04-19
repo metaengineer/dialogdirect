@@ -1,0 +1,10 @@
+begin frame "index"
+	bg "testbk1"
+	button "next" 100 100 "goto frame2"
+	button "exit" 500 500 "exit"
+end
+
+begin frame "frame2"
+	bg "testbk2"
+	button "back" 100 100 "goto index"
+end

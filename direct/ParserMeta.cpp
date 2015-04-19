@@ -7,7 +7,10 @@ CMenuControl::CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LP
 	ParentWnd=pwnd;
 	Rqux=x;
 	Rquy=y;
-	CtlName=cname;
+	actlen=0;
+	namelen=strlen(cname);
+	CtlName=new char[namelen+1];
+	strcpy_s(CtlName, namelen+1, cname);
 	IsActive=FALSE;
 	InputEnabled=FALSE;
 	IsVisible=FALSE;
@@ -19,12 +22,19 @@ void CMenuControl::SetAdditional(LONG param1, LONG param2, LPCSTR str)
 {
 	a=param1;
 	b=param2;
-	act=str;
+	if(act)
+		delete[] act;
+	actlen=strlen(str);
+	act=new char[actlen+1];
+	strcpy_s(act, actlen+1, str);
 }
 
 CMenuControl::~CMenuControl()
 {
-	
+	if(CtlName)
+		delete[] CtlName;
+	if(act)
+		delete[] act;
 }
 
 void CMenuControl::Activity(BOOL bAct)
@@ -218,12 +228,16 @@ SMenuControls::~SMenuControls()
 
 SFrameChain::SFrameChain(LPCSTR fn)
 {
+	this->HasBg=FALSE;
 	this->snext=NULL;
-	this->fname=fn;
+	this->namelen=strlen(fn)+1;
+	this->name=new char[namelen];
+	strcpy_s(name, namelen, fn);
 	this->ctrls=NULL;
 	this->flags=0;
 	this->back=NULL;
-	this->bg=std::string("");
+	this->bg=NULL;
+	this->bglen=NULL;
 	this->list=NULL;
 	this->tabs=NULL;
 	this->menu=NULL;
@@ -239,7 +253,7 @@ void SFrameChain::Add(LPCSTR fn)
 
 SFrameChain *SFrameChain::Find(LPCSTR fn)
 {
-	if(!strcmp(fn, this->fname.c_str()))
+	if(!strcmp(fn, this->name))
 		return this;
 	if(snext)
 		return snext->Find(fn);
@@ -249,6 +263,10 @@ SFrameChain *SFrameChain::Find(LPCSTR fn)
 
 SFrameChain::~SFrameChain()
 {
+	if(name)
+		delete[] name;
+	if(bg)
+		delete[] bg;
 	if(ctrls)
 		delete ctrls;
 	if(list)

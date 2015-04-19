@@ -26,6 +26,7 @@ SFrameChain *CurrentFrame=NULL;
 SVarStorage *vars=NULL;
 CRealm *program=NULL;
 std::string wrkf;
+CBitmapTexture *uu=NULL;
 
 // Global Variables:
 HINSTANCE hInst;								// current instance
@@ -276,10 +277,149 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			CAppTextScriptReader *scri=new CAppTextScriptReader();
 			BOOL hhh=scri->InitTextScript(yov.c_str());
 			if(hhh)
-				MessageBox(OwnWnd, "TRUE", "Debug", MB_OK|MB_ICONINFORMATION);
-			// TODO: script
+			{	
+				DWORD fvt=0;
+				if(scri->ExpectWord("vars",4))
+				{
+					vars=new SVarStorage(scri->ReadWholeNumber());
+				}
+				else
+				{
+					vars=new SVarStorage(0);
+				}
+				while(scri->ExpectWord("begin",5))
+				{
+					scri->ExpectWord("frame",5);
+					SFrameChain **ihu=&frames;
+					while(*ihu)
+					{
+						ihu=&((*ihu)->snext);	
+					}
+					{
+						scri->MoveNextWord();
+						scri->_ExpectLetter('\"');
+						ULONG le=scri->PreRecordIdentifierBraces('\"');
+						char *tttt=new char[le+1];
+						scri->RecordIdentifierBraces(tttt, le, '\"');
+						*ihu=new SFrameChain(tttt);
+						delete[] tttt; // TODO
+					}
+					while(!scri->ExpectWord("end",3))
+					{
+						if(scri->ExpectWord("bg",2))
+						{
+							scri->MoveNextWord();
+							scri->_ExpectLetter('\"');
+							if((*ihu)->HasBg)
+								delete[] (*ihu)->bg;
+							ULONG le=scri->PreRecordIdentifierBraces('\"');
+							(*ihu)->bglen=le+1;
+							(*ihu)->bg=new char[le+1];
+							scri->RecordIdentifierBraces((*ihu)->bg, le, '\"');
+							(*ihu)->HasBg=TRUE;
+							continue;
+						}
+						// TODO: some chain list creation
+						if(scri->ExpectWord("button",6))
+						{
+							scri->MoveNextWord();
+							scri->_ExpectLetter('\"');
+							DWORD uj=scri->PreRecordIdentifierBraces('\"');
+							LPSTR bun=new char[uj+1];
+							scri->RecordIdentifierBraces(bun, uj, '\"'); 
+							SMenuControls **ysy=&((*ihu)->ctrls);
+							while(*ysy)
+								ysy=&((*ysy)->snext);
+							CMenuControl *thi=new CMenuControlButton(hInst, OwnWnd, 
+								scri->ReadWholeNumber(), scri->ReadWholeNumber(), 0, bun); 
+							(*ysy)=new SMenuControls(thi);
+							delete[] bun;
+							scri->MoveNextWord();
+							DWORD uju=scri->PreRecordIdentifierBraces('\"');
+							LPSTR un=new char[uju+1];
+							scri->RecordIdentifierBraces(un, uju, '\"');
+							thi->SetAdditional(0, 0, un); 
+							delete[] un;
+							continue;
+						}
+						if(scri->ExpectWord("checkbox",8))
+						{
+
+						}
+						if(scri->ExpectWord("test",4))
+						{
+
+						}
+						if(scri->ExpectWord("bitmap",6))
+						{
+
+						}
+						if(scri->ExpectWord("field",5))
+						{
+
+						}
+						if(scri->ExpectWord("slider",6))
+						{
+
+						}
+						
+						if(scri->ExpectWord("begin",5))
+						{
+							while(true)
+							{
+								if(scri->ExpectWord("menu",4))
+								{
+									while(!(scri->ExpectWord("end",3)))
+									{
+										if(scri->ExpectWord("option",6))
+										{
+
+										}
+									}
+									break;
+								}
+								if(scri->ExpectWord("list",4))
+								{
+									while(!(scri->ExpectWord("end",3)))
+									{
+										if(scri->ExpectWord("option",6))
+										{
+
+										}
+									}
+									break;
+								}
+								if(scri->ExpectWord("tabs",4))
+								{
+									while(!(scri->ExpectWord("end",3)))
+									{
+										if(scri->ExpectWord("tab",3))
+										{
+
+										}
+									}
+									break;
+								}
+								scri->ExpectWord("end",3);
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
 			delete scri;
 			// SCRIPT END
+			if(frames)
+			{
+				CurrentFrame=frames->Find("index");
+				if(CurrentFrame->HasBg)
+				{
+					std::string hov=wrkf;
+					hov+=CurrentFrame->bg;
+					uu=new CBitmapTexture(hov.c_str());
+				}
+			}
 			UpdateWindow(hWnd);
 			BOOL bContinue=TRUE;
 			BOOL kpout;
@@ -304,6 +444,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			}
 			//destroy
 			_StopProgram();
+			if(uu)
+				delete uu;
 			if(frames)
 				delete frames;
 			if(vars)
@@ -381,7 +523,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControlButton *anl=bnl->ThisEntry;
 					if(hctrl==anl->GetHandle(0))
 					{
-						LPCSTR ddf=anl->CtlName;
+						LPSTR ddf=anl->act;
 						if(strlen(ddf)>2)
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
@@ -436,7 +578,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		HDC fsar=CreateCompatibleDC(hdc);
 		if(CurrentFrame)
 		{
-			CBitmapTexture *uu=CurrentFrame->back;
 			if(uu)
 			{
 				if(uu->GetInfo()>1)
