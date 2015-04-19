@@ -359,12 +359,27 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 						}
 						if(scri->ExpectWord("checkbox",8))
 						{
-
+							// TODO
 						}
-						if(scri->ExpectWord("test",4))
+						if(scri->ExpectWord("text",4))
 						{
-
+							scri->MoveNextWord();
+							scri->_ExpectLetter('\"');
+							DWORD uj=scri->PreRecordIdentifierBraces('\"');
+							LPSTR bun=new char[uj+1];
+							scri->RecordIdentifierBraces(bun, uj, '\"'); 
+							SMenuControls **ysy=&((*ihu)->ctrls);
+							while(*ysy)
+								ysy=&((*ysy)->snext);
+							CMenuControl *thi=new CMenuControlText(hInst, OwnWnd, 
+								scri->ReadWholeNumber(), scri->ReadWholeNumber(), 0, bun); 
+							(*ysy)=new SMenuControls(thi);
+							delete[] bun;
+							thi->b=MAKEWORD(1, (BYTE)scri->ReadWholeNumber());
+							(*ysy)->ShowGroup(0);
+							continue;
 						}
+						// TODO
 						if(scri->ExpectWord("bitmap",6))
 						{
 
