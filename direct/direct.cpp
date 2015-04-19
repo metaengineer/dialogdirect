@@ -116,7 +116,20 @@ void _ParseAction(LPSTR str)
 			return;
 		SFrameChain *iio=frames->Find(uj);
 		if(iio)
+		{
+			if(uu)
+				delete uu;
+			CurrentFrame->ctrls->ShowGroup(0);
 			CurrentFrame=iio;
+			CurrentFrame->ctrls->ShowGroup(1);
+			if(CurrentFrame->HasBg)
+			{
+				std::string hov=wrkf;
+				hov+=CurrentFrame->bg;
+				uu=new CBitmapTexture(hov.c_str());
+			}
+			RedrawWindow(OwnWnd, NULL, NULL, RDW_INVALIDATE|RDW_ALLCHILDREN);
+		}
 	}
 	if(!strcmp(uj,"group"))
 	{
@@ -335,10 +348,12 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							(*ysy)=new SMenuControls(thi);
 							delete[] bun;
 							scri->MoveNextWord();
+							scri->_ExpectLetter('\"');
 							DWORD uju=scri->PreRecordIdentifierBraces('\"');
 							LPSTR un=new char[uju+1];
 							scri->RecordIdentifierBraces(un, uju, '\"');
-							thi->SetAdditional(0, 0, un); 
+							thi->SetAdditional(0, MAKEWORD(1,0), un);
+							(*ysy)->ShowGroup(0);
 							delete[] un;
 							continue;
 						}
@@ -413,6 +428,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			if(frames)
 			{
 				CurrentFrame=frames->Find("index");
+				CurrentFrame->ctrls->ShowGroup(1);
+				UpdateWindow(OwnWnd);
 				if(CurrentFrame->HasBg)
 				{
 					std::string hov=wrkf;
@@ -420,7 +437,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					uu=new CBitmapTexture(hov.c_str());
 				}
 			}
-			UpdateWindow(hWnd);
+			RedrawWindow(OwnWnd, NULL, NULL, RDW_INVALIDATE|RDW_ALLCHILDREN);
 			BOOL bContinue=TRUE;
 			BOOL kpout;
 			// Main message loop:
@@ -494,8 +511,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControl *cma=bna->ThisThing;
 					if(hctrl==cma->GetHandle(0))
 					{
-						LPCSTR ddf=cma->CtlName;
-						if(strlen(ddf)>2)
+						LPCSTR ddf=cma->act;
+						if(ddf&&(strlen(ddf)>2))
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
 							strcpy(fff, ddf);
@@ -523,8 +540,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControlButton *anl=bnl->ThisEntry;
 					if(hctrl==anl->GetHandle(0))
 					{
-						LPSTR ddf=anl->act;
-						if(strlen(ddf)>2)
+						LPCSTR ddf=anl->act;
+						if(ddf&&(strlen(ddf)>2))
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
 							strcpy(fff, ddf);
@@ -539,8 +556,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControlButton *anm=bnm->ThisEntry;
 					if(hctrl==anm->GetHandle(0))
 					{
-						LPCSTR ddf=anm->CtlName;
-						if(strlen(ddf)>2)
+						LPCSTR ddf=anm->act;
+						if(ddf&&(strlen(ddf)>2))
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
 							strcpy(fff, ddf);
@@ -555,8 +572,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControlButton *ant=bnt->ThisTab;
 					if(hctrl==ant->GetHandle(0))
 					{
-						LPCSTR ddf=ant->CtlName;
-						if(strlen(ddf)>2)
+						LPCSTR ddf=ant->act;
+						if(ddf&&(strlen(ddf)>2))
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
 							strcpy(fff, ddf);

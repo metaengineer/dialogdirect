@@ -15,7 +15,7 @@ CMenuControl::CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LP
 	InputEnabled=FALSE;
 	IsVisible=FALSE;
 	CtlWnd=NULL;
-	a=0; b=0; act="";
+	a=0; b=0; act=NULL;
 }
 
 void CMenuControl::SetAdditional(LONG param1, LONG param2, LPCSTR str)
