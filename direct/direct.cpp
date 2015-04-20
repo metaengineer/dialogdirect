@@ -6,6 +6,7 @@
 #include "objbase.h"
 #include "Ustring.h"
 #include "RlmRunner9.h"
+#include "shlwapi.h"
 #include <string>
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
@@ -18,7 +19,6 @@
 
 #define MAX_LOADSTRING 255
 const char FlavorDir[]="flavor\\";
-const char DefFolder[]="C:\\Apps\\metaproduct\\direct\\";
 int CurrentMode=0;
 
 SFrameChain *frames=NULL;
@@ -214,7 +214,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			}
 			eks++;
 		}
-		wrkf=std::string(DefFolder);
 		if(hapath)
 		{
 			UINT kk=eks+1;
@@ -233,6 +232,15 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				}
 				kk++;
 			}
+		}
+		else
+		{
+			LPSTR srr=new char[256];
+			GetModuleFileName(NULL, srr, 256);
+			PathRemoveFileSpec(srr);
+			PathAddBackslash(srr);
+			wrkf=std::string(srr);
+			delete[] srr;
 		}
 	}
 
