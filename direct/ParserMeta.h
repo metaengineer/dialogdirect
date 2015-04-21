@@ -33,11 +33,13 @@ public:
 public:
 	CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname);
 	void SetAdditional(LONG param1, LONG param2, LPCSTR str);
+	LPCSTR GetName();
+	LPCSTR GetAct();
 	virtual void Visibility(BOOL bShow);
 	virtual void Activity(BOOL bAct);
 	virtual void AssignList(std::list<std::pair<int,LPCSTR>> ls);
 	virtual HWND GetHandle(UINT wh);
-	void RegexName(SVarStorage *vs);
+	BOOL RegexName(SVarStorage *vs);
 	virtual ~CMenuControl();
 };
 
