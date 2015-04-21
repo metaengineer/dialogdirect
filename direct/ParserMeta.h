@@ -86,6 +86,7 @@ class CMenuControlText : public CMenuControl
 {
 public:
 	CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname);
+	CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, WORD wi, WORD group, int var1, LPCSTR cname);
 	~CMenuControlText();
 };
 
