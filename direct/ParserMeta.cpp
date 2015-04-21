@@ -29,6 +29,11 @@ void CMenuControl::SetAdditional(LONG param1, LONG param2, LPCSTR str)
 	strcpy_s(act, actlen+1, str);
 }
 
+void CMenuControl::RegexName(SVarStorage *vs)
+{
+	
+}
+
 CMenuControl::~CMenuControl()
 {
 	if(CtlName)
