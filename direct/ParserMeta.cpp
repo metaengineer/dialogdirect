@@ -73,7 +73,7 @@ BOOL CMenuControl::RegexName(SVarStorage *vs)
 			CtlName[ewe]=ee%10;
 			ee/=10;
 		}
-		strncpy(CtlName[IsRegex+ar], frk[IsRegex], namelen-IsRegex);
+		strncpy(&(CtlName[IsRegex+ar]), frk[IsRegex], namelen-IsRegex);
 		delete[] frk;
 	}
 }
