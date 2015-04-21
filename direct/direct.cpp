@@ -351,9 +351,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							SMenuControls **ysy=&((*ihu)->ctrls);
 							while(*ysy)
 								ysy=&((*ysy)->snext);
+							int xb=scri->ReadWholeNumber();
+							int yb=scri->ReadWholeNumber();	
 							CMenuControl *thi=new CMenuControlButton(hInst, OwnWnd, 
-								scri->ReadWholeNumber(), scri->ReadWholeNumber(), 
-								(WORD)scri->ReadWholeNumber(), bun); 
+								xb, yb, 0, bun); 
 							(*ysy)=new SMenuControls(thi);
 							delete[] bun;
 							scri->MoveNextWord();
@@ -380,12 +381,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							SMenuControls **ysy=&((*ihu)->ctrls);
 							while(*ysy)
 								ysy=&((*ysy)->snext);
+							int xg=scri->ReadWholeNumber();
+							int yg=scri->ReadWholeNumber();
+							WORD varg=scri->ReadWholeNumber();
+							WORD wi=scri->ReadWholeNumber();
 							CMenuControl *thi=new CMenuControlText(hInst, OwnWnd, 
-								scri->ReadWholeNumber(), scri->ReadWholeNumber(), 0, bun); 
+								xb, yb, wi, MAKEWORD(1, 0), varg, bun); 
 							(*ysy)=new SMenuControls(thi);
 							delete[] bun;
-							thi->a=(BYTE)scri->ReadWholeNumber();
-							thi->b=MAKEWORD(1, 0);
 							BOOL regexforth=TRUE;
 							while(regexforth)
 								regexforth=thi->RegexName(vars->GetVar(thi->VarLink));
