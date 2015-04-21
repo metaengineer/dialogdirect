@@ -5,6 +5,8 @@
 #include <list>
 #include "Bitmaps.h"
 
+extern class SVarStorage;
+
 #ifndef UTIL_METAPARSER_H
 #define UTIL_METAPARSER_H
 
