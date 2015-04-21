@@ -152,7 +152,7 @@ CMenuControlField::~CMenuControlField()
 
 CMenuControlText::CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 40, pwnd, NULL, pins, NULL); 	
+	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, a, 20, pwnd, NULL, pins, NULL); 	
 }
 
 CMenuControlText::~CMenuControlText()
