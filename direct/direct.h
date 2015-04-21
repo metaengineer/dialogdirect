@@ -56,7 +56,7 @@ public:
 
 	button "regex_name" x y "action"
 
-	text "regex_name"
+	text "regex_name" x y variable_for_regex xwidth
 
 	slider "name" x y var_num min max
 
