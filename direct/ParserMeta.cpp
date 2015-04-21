@@ -76,6 +76,7 @@ BOOL CMenuControl::RegexName(SVarStorage *vs)
 		strncpy(&(CtlName[IsRegex+ar]), frk[IsRegex], namelen-IsRegex);
 		delete[] frk;
 	}
+	return (BOOL)IsRegex;
 }
 
 CMenuControl::~CMenuControl()
