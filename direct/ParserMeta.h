@@ -5,8 +5,6 @@
 #include <list>
 #include "Bitmaps.h"
 
-extern class SVarStorage;
-
 #ifndef UTIL_METAPARSER_H
 #define UTIL_METAPARSER_H
 
@@ -39,7 +37,7 @@ public:
 	virtual void Activity(BOOL bAct);
 	virtual void AssignList(std::list<std::pair<int,LPCSTR>> ls);
 	virtual HWND GetHandle(UINT wh);
-	BOOL RegexName(SVarStorage *vs);
+	BOOL RegexName(int in);
 	virtual ~CMenuControl();
 };
 
