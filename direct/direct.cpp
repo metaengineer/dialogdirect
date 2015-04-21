@@ -534,7 +534,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControl *cma=bna->ThisThing;
 					if(hctrl==cma->GetHandle(0))
 					{
-						LPCSTR ddf=cma->act;
+						LPCSTR ddf=cma->GetAct();
 						if(ddf&&(strlen(ddf)>2))
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
@@ -563,7 +563,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControlButton *anl=bnl->ThisEntry;
 					if(hctrl==anl->GetHandle(0))
 					{
-						LPCSTR ddf=anl->act;
+						LPCSTR ddf=anl->GetAct();
 						if(ddf&&(strlen(ddf)>2))
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
@@ -579,7 +579,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControlButton *anm=bnm->ThisEntry;
 					if(hctrl==anm->GetHandle(0))
 					{
-						LPCSTR ddf=anm->act;
+						LPCSTR ddf=anm->GetAct();
 						if(ddf&&(strlen(ddf)>2))
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
@@ -595,7 +595,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					CMenuControlButton *ant=bnt->ThisTab;
 					if(hctrl==ant->GetHandle(0))
 					{
-						LPCSTR ddf=ant->act;
+						LPCSTR ddf=ant->GetAct();
 						if(ddf&&(strlen(ddf)>2))
 						{
 							LPSTR fff=new char[strlen(ddf)+1];
