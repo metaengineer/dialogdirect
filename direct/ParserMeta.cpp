@@ -18,6 +18,18 @@ CMenuControl::CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LP
 	a=0; b=0; act=NULL;
 }
 
+void CMenuControl::GetName()
+{
+	// for outside, it's read-only
+	return CtlName;
+}
+
+void CMenuControl::GetAct()
+{
+	// for outside, it's read-only
+	return act;
+}
+
 void CMenuControl::SetAdditional(LONG param1, LONG param2, LPCSTR str)
 {
 	a=param1;
@@ -29,7 +41,7 @@ void CMenuControl::SetAdditional(LONG param1, LONG param2, LPCSTR str)
 	strcpy_s(act, actlen+1, str);
 }
 
-void CMenuControl::RegexName(SVarStorage *vs)
+BOOL CMenuControl::RegexName(SVarStorage *vs)
 {
 	size_t IsRegex=0;
 	for(size_t rer=0; rer<namelen; rer++)
