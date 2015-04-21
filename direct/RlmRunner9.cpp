@@ -37,7 +37,7 @@ CRealm::CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir, SVarStorage *vs)
 		hfg.top=100;
 		hfg.bottom=700;
 		AdjustWindowRect(&hfg, WS_POPUP|WS_BORDER, FALSE);
-		DxWnd=CreateWindow(DxWndClassName, "RealmRunner", WS_POPUP|WS_BORDER|WS_VISIBLE, hfg.left, hfg.top, hfg.right-hfg.left, hfg.bottom-hfg.top,
+		DxWnd=CreateWindow(DxWndClassName, "RealmRunner", WS_OVERLAPPED|WS_VISIBLE, hfg.left, hfg.top, hfg.right-hfg.left, hfg.bottom-hfg.top,
 			ParentWindow, NULL, ParentInstance, NULL);
 
 		if(DxWnd)
