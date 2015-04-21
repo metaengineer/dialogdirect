@@ -205,6 +205,13 @@ CMenuControlText::CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, int 
 	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, a, 20, pwnd, NULL, pins, NULL); 	
 }
 
+CMenuControlText::CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, WORD wi, WORD group, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
+{
+	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, wi, 20, pwnd, NULL, pins, NULL); 	
+	a=wi;
+	b=group;
+}
+
 CMenuControlText::~CMenuControlText()
 {
 	DestroyWindow(CtlWnd);
