@@ -18,13 +18,13 @@ CMenuControl::CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LP
 	a=0; b=0; act=NULL;
 }
 
-void CMenuControl::GetName()
+LPCSTR CMenuControl::GetName()
 {
 	// for outside, it's read-only
 	return CtlName;
 }
 
-void CMenuControl::GetAct()
+LPCSTR CMenuControl::GetAct()
 {
 	// for outside, it's read-only
 	return act;
