@@ -352,7 +352,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							while(*ysy)
 								ysy=&((*ysy)->snext);
 							CMenuControl *thi=new CMenuControlButton(hInst, OwnWnd, 
-								scri->ReadWholeNumber(), scri->ReadWholeNumber(), 0, bun); 
+								scri->ReadWholeNumber(), scri->ReadWholeNumber(), 
+								(WORD)scri->ReadWholeNumber(), bun); 
 							(*ysy)=new SMenuControls(thi);
 							delete[] bun;
 							scri->MoveNextWord();
