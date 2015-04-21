@@ -41,7 +41,7 @@ void CMenuControl::SetAdditional(LONG param1, LONG param2, LPCSTR str)
 	strcpy_s(act, actlen+1, str);
 }
 
-BOOL CMenuControl::RegexName(SVarStorage *vs)
+BOOL CMenuControl::RegexName(int in)
 {
 	size_t IsRegex=0;
 	for(size_t rer=0; rer<namelen; rer++)
@@ -54,20 +54,20 @@ BOOL CMenuControl::RegexName(SVarStorage *vs)
 	}
 	if(IsRegex)
 	{
-		WORD ee=a;
+		WORD ee=in;
 		int ar=1;
 		while(ee)
 		{
 			ee/=10;
 			ar++;
 		}
-		if(a)
+		if(in)
 			ar--;
 		LPSTR frk=CtlName;
 		CtlName=new char[namelen+ar];
 		namelen+=(ar-1);
 		strncpy(CtlName, frk, IsRegex);
-		ee=a;
+		ee=in;
 		for(size_t ewe=IsRegex+ar-1; ewe>=IsRegex; ewe--)
 		{
 			CtlName[ewe]=ee%10;
