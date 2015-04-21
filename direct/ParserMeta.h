@@ -17,16 +17,16 @@ protected:
 	BOOL IsActive;
 	BOOL InputEnabled;
 	BOOL IsVisible;
+	LPSTR act;
+	UINT actlen;
+	LPSTR CtlName;
+	UINT namelen;
 public:
 	LONG a;
 	LONG b;
-	LPSTR act;
-	UINT actlen;
 	int VarLink;
 	int Rqux;
 	int Rquy;
-	LPSTR CtlName;
-	UINT namelen;
 	std::list<std::pair<int,LPCSTR>> Hash;
 public:
 	CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname);
@@ -35,6 +35,7 @@ public:
 	virtual void Activity(BOOL bAct);
 	virtual void AssignList(std::list<std::pair<int,LPCSTR>> ls);
 	virtual HWND GetHandle(UINT wh);
+	void RegexName(SVarStorage *vs);
 	virtual ~CMenuControl();
 };
 
