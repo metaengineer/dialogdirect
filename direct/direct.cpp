@@ -383,7 +383,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 								scri->ReadWholeNumber(), scri->ReadWholeNumber(), 0, bun); 
 							(*ysy)=new SMenuControls(thi);
 							delete[] bun;
-							thi->b=MAKEWORD(1, (BYTE)scri->ReadWholeNumber());
+							thi->a=(BYTE)scri->ReadWholeNumber();
+							thi->b=MAKEWORD(1, 0);
+							BOOL regexforth=TRUE;
+							while(regexforth)
+								regexforth=thi->RegexName(vars->GetVar(thi->VarLink));
 							(*ysy)->ShowGroup(0);
 							continue;
 						}
