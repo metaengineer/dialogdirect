@@ -168,6 +168,8 @@ void CMenuControlSlider::Visibility(BOOL bShow)
 CMenuControlSlider::~CMenuControlSlider()
 {
 	DestroyWindow(CtlWnd);
+	DestroyWindow(OwnWndL);
+	DestroyWindow(OwnWndR);
 }
 
 CMenuControlCheckbox::CMenuControlCheckbox(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
