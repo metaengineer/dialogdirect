@@ -3,13 +3,17 @@
 
 const CHAR *DxWndClassName="RlmRunnerClass";
 
-CRealm::CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir, SVarStorage *vs)
+CRealm::CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir)
 {
 	ParentInstance=pins;
 	ParentWindow=pwnd;
 	IsLoaded=FALSE;
 	IsClass=FALSE;
 	IsWindow=FALSE;
+	IsInterface=FALSE;
+	size_t sdr=strlen(RlmDir)+1;
+	RealmDir=new char[sdr];
+	strcpy_s(RealmDir, sdr, RlmDir);
 
 	WNDCLASSEX bla;
 	bla.cbClsExtra=0;
@@ -28,7 +32,6 @@ CRealm::CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir, SVarStorage *vs)
 	if(RegisterClassEx(&bla))
 		IsClass=TRUE;
 
-	IsInterface=FALSE;
 	if(IsClass)
 	{
 		RECT hfg;
@@ -47,7 +50,28 @@ CRealm::CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir, SVarStorage *vs)
 		if(roo)
 			IsInterface=TRUE;
 	}
-}	
+}
+
+BOOL CRealm::RegisterVars(SVarStorage *vs)
+{
+	return FALSE;
+}
+
+BOOL CRealm::Initialize()
+{
+	return FALSE;
+}
+
+BOOL CRealm::RegisterMessageSink(CMessageCache *sink)
+{
+	sink->DropMessage("error log", 0);
+	return FALSE;
+}
+
+void CRealm::OnFrame(DWORD tx)
+{
+
+}
 
 CRealm::~CRealm()
 {
@@ -60,4 +84,5 @@ CRealm::~CRealm()
 		DestroyWindow(DxWnd);
 	if(IsClass)
 		UnregisterClass(DxWndClassName, ParentInstance);
+	delete[] RealmDir;
 }

@@ -20,13 +20,13 @@ CMenuControl::CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LP
 
 LPCSTR CMenuControl::GetName()
 {
-	// for outside, it's read-only
+	//for outside, it's read-only
 	return CtlName;
 }
 
 LPCSTR CMenuControl::GetAct()
 {
-	// for outside, it's read-only
+	//for outside, it's read-only
 	return act;
 }
 
@@ -44,9 +44,9 @@ void CMenuControl::SetAdditional(LONG param1, LONG param2, LPCSTR str)
 BOOL CMenuControl::RegexName(int in)
 {
 	size_t IsRegex=0;
-	for(size_t rer=0; rer<namelen; rer++)
+	for(size_t rer=0;rer<namelen; rer++)
 	{
-		if(CtlName[rer]=='%')
+		if(CtlName[rer]='%')
 		{
 			IsRegex=rer;
 			break;
@@ -204,12 +204,12 @@ CMenuControlField::~CMenuControlField()
 
 CMenuControlText::CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, a, 20, pwnd, NULL, pins, NULL); 	
+	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 20, pwnd, NULL, pins, NULL); 	
 }
 
 CMenuControlText::CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, WORD wi, WORD group, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, wi, 20, pwnd, NULL, pins, NULL); 	
+	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, wi, 20, pwnd, NULL, pins, NULL); 
 	a=wi;
 	b=group;
 }

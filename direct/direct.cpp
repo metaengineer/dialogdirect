@@ -9,9 +9,9 @@
 #include "shlwapi.h"
 #include <string>
 #ifdef _DEBUG
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+	#define _CRTDBG_MAP_ALLOC
+	#include <stdlib.h>
+	#include <crtdbg.h>
 #endif
 
 #include "Bitmaps.h"
@@ -31,6 +31,8 @@ CBitmapTexture *uu=NULL;
 // Global Variables:
 HINSTANCE hInst;								// current instance
 HWND OwnWnd=NULL;
+HWND Messenger=NULL;
+CMessageCache *cac=NULL;
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
@@ -40,58 +42,7 @@ LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 int _RunProgram(SVarStorage *vs, LPCSTR wdir);
 int _StopProgram();
 void _ParseAction(LPSTR str);
-
-// classes
-
-SVarStorage::SVarStorage(UINT qu)
-{
-	varq=0;
-	init=FALSE;
-	if((qu>0)&&(qu<=1000))
-	{
-		store=new float[qu];
-		varq=qu-1;
-		init=TRUE;
-	}
-}
-
-BOOL SVarStorage::CheckInit()
-{
-	return init;
-}
-
-BOOL SVarStorage::CheckVar(UINT no)
-{
-	return (init&&(varq>=no)); 
-}
-
-BOOL SVarStorage::SetVar(UINT no, float dat)
-{
-	if(init&&(varq>=no))
-	{
-		store[no]=dat;
-		return TRUE;
-	}
-	return FALSE;
-}
-
-float SVarStorage::GetVar(UINT no)
-{
-	if(init&&(varq>=no))
-	{
-		return store[no];
-	}
-	return 0.0f;
-}
-
-SVarStorage::~SVarStorage()
-{
-	if(init)
-	{
-		delete[] store;
-		init=FALSE;
-	}
-}
+void _LogToFile();
 
 void _ParseAction(LPSTR str)
 {
@@ -118,7 +69,10 @@ void _ParseAction(LPSTR str)
 		if(iio)
 		{
 			if(uu)
+			{
 				delete uu;
+				uu=NULL;
+			}
 			CurrentFrame->ctrls->ShowGroup(0);
 			CurrentFrame=iio;
 			CurrentFrame->ctrls->ShowGroup(1);
@@ -156,16 +110,32 @@ void _ParseAction(LPSTR str)
 	}
 }
 
+void _LogToFile()
+{
+	HANDLE hTemp=CreateFile("log.txt", STANDARD_RIGHTS_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	if(cac)
+		cac->WriteToFile(hTemp);
+	CloseHandle(hTemp);
+}
+
 int _RunProgram(SVarStorage *vs, LPCSTR wdir)
 {
-	program=new CRealm(hInst, OwnWnd, wdir, vs);
+	// this was probably called from WM_COMMAND, so wait for that to finish
+	PostMessage(OwnWnd, WM_USER+0x8000, (WPARAM)0, (LPARAM)wdir);
+	PostMessage(OwnWnd, WM_USER+0x8001, (WPARAM)0, (LPARAM)(LPVOID)vs);
 	return 1;
 }
 
 int _StopProgram()
 {
 	if(program)
+	{
 		delete program;
+		delete cac;
+		cac=NULL;
+		DestroyWindow(Messenger);
+		program=NULL;
+	}
 	return 0;
 }
 
@@ -285,7 +255,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		gf.bottom=610;
 		gf.left=10;
 		gf.right=810;
-		AdjustWindowRect(&gf, WS_POPUP|WS_BORDER, FALSE);
+		AdjustWindowRect(&gf, WS_POPUP|WS_THICKFRAME, FALSE);
 
 		OwnWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 			gf.left, gf.top, gf.right-gf.left, gf.bottom-gf.top, HWND_DESKTOP, NULL, hInstance, NULL);
@@ -352,7 +322,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							while(*ysy)
 								ysy=&((*ysy)->snext);
 							int xb=scri->ReadWholeNumber();
-							int yb=scri->ReadWholeNumber();	
+							int yb=scri->ReadWholeNumber();
 							CMenuControl *thi=new CMenuControlButton(hInst, OwnWnd, 
 								xb, yb, 0, bun); 
 							(*ysy)=new SMenuControls(thi);
@@ -369,7 +339,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 						}
 						if(scri->ExpectWord("checkbox",8))
 						{
-							// TODO
+
 						}
 						if(scri->ExpectWord("text",4))
 						{
@@ -381,21 +351,22 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							SMenuControls **ysy=&((*ihu)->ctrls);
 							while(*ysy)
 								ysy=&((*ysy)->snext);
-							int xg=scri->ReadWholeNumber();
-							int yg=scri->ReadWholeNumber();
+							int xq=scri->ReadWholeNumber();
+							int yq=scri->ReadWholeNumber();
 							WORD varg=scri->ReadWholeNumber();
 							WORD wi=scri->ReadWholeNumber();
 							CMenuControl *thi=new CMenuControlText(hInst, OwnWnd, 
-								xb, yb, wi, MAKEWORD(1, 0), varg, bun); 
+								xq, yq, wi, MAKEWORD(1, 0), varg, bun); 
 							(*ysy)=new SMenuControls(thi);
 							delete[] bun;
 							BOOL regexforth=TRUE;
 							while(regexforth)
+							{
 								regexforth=thi->RegexName(vars->GetVar(thi->VarLink));
+							}
 							(*ysy)->ShowGroup(0);
 							continue;
 						}
-						// TODO
 						if(scri->ExpectWord("bitmap",6))
 						{
 
@@ -488,6 +459,19 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					dFrame=dTiming;
 					dTiming=GetTickCount();
 					//
+					if(program)
+					{
+						try
+						{
+							program->OnFrame(dTiming-dFrame);
+						}
+						catch(AutoStopException g)
+						{
+							MessageBox(OwnWnd, "Saving log to text file", "Error detected", MB_OK | MB_ICONERROR);
+							_LogToFile();
+							PostQuitMessage(0);
+						}
+					}
 				}
 			}
 			//destroy
@@ -615,12 +599,50 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					bnt=bnt->snext;
 				}
 			}
+			return 0;
 		}
 		default:
 
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
 		break;
+	case (WM_USER+0x8000):
+		{
+			// this was one time use, destroying
+			if(uu)
+				delete uu;
+			uu=NULL;
+			CurrentFrame=NULL;
+			if(frames)
+				delete frames;
+			frames=NULL;
+			program=new CRealm(hInst, OwnWnd, (LPCSTR)(LPVOID)lParam);
+			Messenger=CreateWindowEx(0, "Edit", "", 
+				WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_READONLY | ES_MULTILINE | ES_AUTOVSCROLL,
+				0, 0, 800, 600, OwnWnd, NULL, hInst, NULL);
+			SendMessage(Messenger, EM_SETLIMITTEXT, 32*256, 0);
+			cac=new CMessageCache(Messenger);
+			program->RegisterMessageSink(cac);
+			return 0;
+		}
+	case (WM_USER+0x8001):
+		{
+			if(program) // in case the message was sent by something else
+			{
+				try
+				{
+					program->RegisterVars((SVarStorage *)(LPVOID)lParam);
+					program->Initialize();
+				}
+				catch(AutoStopException g)
+				{
+					MessageBox(OwnWnd, "Saving log to text file", "Error detected", MB_OK | MB_ICONERROR);
+					_LogToFile();
+					PostQuitMessage(0);
+				}
+			}
+			return 0;
+		}
 	case WM_PAINT:
 		{	hdc = BeginPaint(hWnd, &ps);
 		HDC fsar=CreateCompatibleDC(hdc);

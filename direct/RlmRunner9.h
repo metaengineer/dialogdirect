@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "d3d9.h"
 #include "d3dx9.h"
+#include "VarStorage.h"
+#include "ErrorStream.h"
 
 #ifndef RLMRUNNER_9_H
 #define RLMRUNNER_9_H
-
-extern class SVarStorage;
 
 class CRealm
 {
@@ -18,9 +18,13 @@ private:
 	BOOL IsClass;
 	BOOL IsWindow;
 	BOOL IsInterface;
-
+	LPSTR RealmDir;
 public:
-	CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir, SVarStorage *vs);
+	CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir);
+	BOOL RegisterVars(SVarStorage *vs);
+	BOOL RegisterMessageSink(CMessageCache *sink);
+	BOOL Initialize();
+	void OnFrame(DWORD tx);
 	~CRealm();
 };
 

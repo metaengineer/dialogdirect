@@ -3,21 +3,6 @@
 #include "resource.h"
 #include "ParserMeta.h"
 
-class SVarStorage
-{
-private:
-	float *store;
-	UINT varq;
-	BOOL init;
-public:
-	SVarStorage(UINT qu);
-	BOOL SetVar(UINT no, float dat);
-	BOOL CheckVar(UINT no);
-	BOOL CheckInit();
-	float GetVar(UINT no);
-	~SVarStorage();
-};
-
 // flavor script syntax
 /*
 	flavor global floating-point variables ($g1 - $g<quantity>)
@@ -33,16 +18,14 @@ public:
 	end
 
 	menu:
-	begin menu
-		set pixelsx pixelsy
+	begin menu x y
 		option "name" "action"
 		...
 		option "name" "action"
 	end
 
 	list:
-	begin list
-		set pixelsx pixelsy
+	begin list x y
 		option "name" "action"
 		...
 		option "name" "action"
@@ -56,7 +39,7 @@ public:
 
 	button "regex_name" x y "action"
 
-	text "regex_name" x y variable_for_regex xwidth
+	text "regex_name" x y width
 
 	slider "name" x y var_num min max
 
