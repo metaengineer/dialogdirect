@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\..\..\instapps\metaproduct\sdelta\dbg"
+			OutputDirectory="E:\instapps\metaproduct\sdelta\"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
@@ -97,7 +97,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\..\..\..\..\Instapps\metaproduct\sdelta"
+			OutputDirectory="F:\Instapps\metaproduct\sdelta"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
@@ -230,7 +230,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ErrorStream.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Fonts.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\GIF.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\handler.cpp"
 					>
 				</File>
 				<File
@@ -251,6 +263,10 @@
 				</File>
 				<File
 					RelativePath=".\Ustring.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\VarStorage.cpp"
 					>
 				</File>
 			</Filter>
@@ -296,11 +312,27 @@
 				Name="Util"
 				>
 				<File
+					RelativePath=".\AutoStop.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Bitmaps.h"
 					>
 				</File>
 				<File
+					RelativePath=".\ErrorStream.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Fonts.h"
+					>
+				</File>
+				<File
+					RelativePath=".\GIF.h"
+					>
+				</File>
+				<File
+					RelativePath=".\handler.h"
 					>
 				</File>
 				<File
@@ -321,6 +353,10 @@
 				</File>
 				<File
 					RelativePath=".\Ustring.h"
+					>
+				</File>
+				<File
+					RelativePath=".\VarStorage.h"
 					>
 				</File>
 			</Filter>

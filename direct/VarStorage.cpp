@@ -8,6 +8,10 @@ SVarStorage::SVarStorage(UINT qu)
 	if((qu>0)&&(qu<=1000))
 	{
 		store=new float[qu];
+		for(UINT yu=0; yu<qu; yu++)
+		{
+			store[yu]=0.0f;
+		}	
 		varq=qu-1;
 		init=TRUE;
 	}

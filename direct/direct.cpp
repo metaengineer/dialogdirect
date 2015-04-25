@@ -251,13 +251,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 		hInst = hInstance; // Store instance handle in our global variable
 		RECT gf;
-		gf.top=10;
-		gf.bottom=610;
+		gf.top=35;
+		gf.bottom=635;
 		gf.left=10;
 		gf.right=810;
-		AdjustWindowRect(&gf, WS_POPUP|WS_THICKFRAME, FALSE);
+		AdjustWindowRect(&gf, WS_POPUP|WS_CAPTION|WS_THICKFRAME, FALSE);
 
-		OwnWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+		OwnWnd = CreateWindow(szWindowClass, szTitle, 
+			WS_OVERLAPPED|WS_SYSMENU|WS_CAPTION|WS_MINIMIZEBOX|WS_THICKFRAME|WS_VISIBLE,
 			gf.left, gf.top, gf.right-gf.left, gf.bottom-gf.top, HWND_DESKTOP, NULL, hInstance, NULL);
 
 		if(OwnWnd)
