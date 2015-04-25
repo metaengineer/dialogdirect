@@ -96,7 +96,7 @@ void _ParseAction(LPSTR str)
 	}
 	if(!strcmp(uj, "set"))
 	{
-		if(vars)
+		if(!vars)
 			return;
 		char *ya=strtok(NULL, " ");
 		char *wa=strtok(NULL, " ");
