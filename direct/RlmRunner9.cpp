@@ -76,9 +76,9 @@ BOOL CRealm::RegisterVars(SVarStorage *vs)
 		dis.bottom=580;
 		break;
 	case 2:
-		dis.left=0;
+		dis.left=10;
 		dis.right=1024;
-		dis.top=0;
+		dis.top=35;
 		dis.bottom=768;
 		break;
 	}
