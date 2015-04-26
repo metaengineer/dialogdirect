@@ -170,7 +170,7 @@ bool COutHandler::FWriteWholeNumber(long long indata)
 		return false;
 	bool bNegative=false;
 	bool netglukov=true;
-	int a=indata;
+	long long a=indata;
 	if(a<0)
 	{
 		bNegative=true;
