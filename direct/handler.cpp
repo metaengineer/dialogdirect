@@ -256,7 +256,7 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 	buffer = new char;
 	strint = new char[14];
 	strint[13]='\0';
-	short int i=0;
+	short int i=6-multiply;
 	while(a)
 	{
 		b=a%10;
@@ -299,6 +299,8 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 			netglukov=false;
 		if(!writeresult)
 			netglukov=false;
+		if(i==(6-multiply))
+			break;	
 	}
 	*buffer=char(32);
 	if(!WriteFile(LandOutFile, buffer, 1, &writeresult, NULL))
