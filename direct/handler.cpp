@@ -169,7 +169,6 @@ bool COutHandler::FWriteWholeNumber(long long indata)
 	if(!FileEnabledW)
 		return false;
 	bool bNegative=false;
-	bool netglukov=true;
 	long long a=indata;
 	if(a<0)
 	{
@@ -183,12 +182,12 @@ bool COutHandler::FWriteWholeNumber(long long indata)
 	strint = new char[15];
 	strint[14]='\0';
 	int i=0;
-	while((a!=0)&&netglukov)
+	while(a)
 	{
 		b=a%10;
 		a=a/10;
 		strint[i]=char(b+48);
-		if(i>=12)
+		if(i==13)
 		{
 			delete buffer;
 			delete[] strint;
@@ -201,25 +200,29 @@ bool COutHandler::FWriteWholeNumber(long long indata)
 		strint[i]=char(48);
 		i++;
 	}
+	bool netglukov=true;
 	if(bNegative)
 	{
-		strint[i]=char(45);
-		i++;
+		*buffer=char(45);
+		if(!WriteFile(LandOutFile, buffer, 1, &writeresult, NULL))
+			netglukov=false;
+		if(!writeresult)
+			netglukov=false;
 	}
 	while(i>0)
 	{
 		i--;
 		*buffer=strint[i];
-		if(WriteFile(LandOutFile, buffer, 1, &writeresult, NULL)==0)
+		if(!WriteFile(LandOutFile, buffer, 1, &writeresult, NULL))
 			netglukov=false;
 		if(!writeresult)
 			netglukov=false;
 	}
 	*buffer=char(32);
-	if(WriteFile(LandOutFile, buffer, 1, &writeresult, NULL)==0)
+	if(!WriteFile(LandOutFile, buffer, 1, &writeresult, NULL))
 		netglukov=false;
 	delete(buffer);
-	delete(strint);
+	delete[] strint;
 	if(!netglukov)
 		return false;
 	return true;
