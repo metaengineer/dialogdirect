@@ -237,33 +237,32 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 	if(!FileEnabledW)
 		return false;
 	bool bNegative=false;
-	bool netglukov=true;
-	if(multiply>4)
+	if(multiply>5)
 		return false;
 	int mvalue=1;
 	unsigned int ef;
 	for (ef=1;ef<=multiply;ef++)
 		mvalue=mvalue*10;
 	int indata=int(indatafl*mvalue);
-	int a=indata;
-	if(a<0)
+	if(indata<0)
 	{
 		bNegative=true;
-		a=-a;
+		indata=-indata;
 	}
+	int a=indata;
 	int b=0;
 	char *buffer;
 	char *strint;
 	buffer = new char;
-	strint = new char[11];
-	strint[10]='\0';
-	short int i=1;
-	while((a!=0)&&netglukov)
+	strint = new char[14];
+	strint[13]='\0';
+	short int i=0;
+	while(a)
 	{
 		b=a%10;
 		a=a/10;
 		strint[i]=char(b+48);
-		if(i>=8)
+		if(i>12)
 		{
 			delete buffer;
 			delete[] strint;
@@ -271,37 +270,38 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 		}
 		i++;
 	}
-	// FIXED: in situations where
-	// variable "i" doesn't become 6 ( 0 < abs(indatafl) < 1000 )
-	while(i<6)
+	while(i<7)
 	{
 		strint[i]=char(48);
 		i++;
 	}
-	short int p=0;
-	short int erp;
-	while(p<=3)
+	short int p=6;
+	while(p<13)
 	{
-		erp=p;
-		strint[erp]=strint[++p];
+		strint[p+1]=strint[p];
+		p++;
 	}
-	strint[4]=char(46);
+	strint[6]=char(46);
+	bool netglukov=true;
 	if(bNegative)
 	{
-		strint[i]=char(45);
-		i++;
+		*buffer='-';
+		if(!WriteFile(LandOutFile, buffer, 1, &writeresult, NULL))
+			netglukov=false;
+		if(!writeresult)
+			netglukov=false;
 	}
 	while(i>0)
 	{
 		i--;
 		*buffer=strint[i];
-		if(WriteFile(LandOutFile, buffer, 1, &writeresult, NULL)==0)
+		if(!WriteFile(LandOutFile, buffer, 1, &writeresult, NULL))
 			netglukov=false;
 		if(!writeresult)
 			netglukov=false;
 	}
 	*buffer=char(32);
-	if(WriteFile(LandOutFile, buffer, 1, &writeresult, NULL)==0)
+	if(!WriteFile(LandOutFile, buffer, 1, &writeresult, NULL))
 		netglukov=false;
 	delete buffer;
 	delete[] strint;
