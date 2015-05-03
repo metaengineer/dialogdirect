@@ -257,15 +257,15 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 	char *buffer;
 	char *strint;
 	buffer = new char;
-	strint = new char[14];
-	strint[13]='\0';
+	strint = new char[15];
+	strint[14]='\0';
 	short int i=6-multiply;
 	while(a)
 	{
 		b=a%10;
 		a=a/10;
 		strint[i]=char(b+48);
-		if(i>12)
+		if(i>13)
 		{
 			delete buffer;
 			delete[] strint;
@@ -273,13 +273,13 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 		}
 		i++;
 	}
-	while(i<7)
+	while(i<13)
 	{
 		strint[i]=char(48);
 		i++;
 	}
 	short int p=6;
-	while(p<13)
+	while(p<12)
 	{
 		strint[p+1]=strint[p];
 		p++;
