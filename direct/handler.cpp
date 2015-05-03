@@ -278,10 +278,10 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 		strint[i]=char(48);
 		i++;
 	}
-	short int p=6;
-	while(p<13)
+	short int p=1;
+	while(p<=5)
 	{
-		strint[p+1]=strint[p];
+		strint[p-1]=strint[p];
 		p++;
 	}
 	strint[6]=char(46);
@@ -302,7 +302,7 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 			netglukov=false;
 		if(!writeresult)
 			netglukov=false;
-		if(i==(6-multiply))
+		if(i==(5-multiply))
 			break;	
 	}
 	*buffer=char(32);
