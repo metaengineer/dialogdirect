@@ -279,7 +279,7 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 		i++;
 	}
 	short int p=6;
-	while(p<12)
+	while(p<13)
 	{
 		strint[p+1]=strint[p];
 		p++;
