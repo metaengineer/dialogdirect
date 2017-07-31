@@ -192,16 +192,22 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			UINT kk=eks+1;
 			while(lpCmdLine[kk])
 			{
-				if(lpCmdLine[kk]=='\"')
+				switch(lpCmdLine[kk])
 				{
+                case '\"':
+                case ' ':
+                case 0:
 					UINT y=kk-eks-1;
 					if(y)
 					{
-						LPTSTR ggf=new char[y+1];
-						strncpy(ggf, &(lpCmdLine[eks+1]), y+1);
+						LPTSTR ggf=new char[y+2];
+						strncpy(ggf, &(lpCmdLine[eks+1]), y);
+						ggf[y]=0;
+						PathAddBackslash(ggf);
 						wrkf=std::string(ggf);
 						delete[] ggf;
 					}
+					break;
 				}
 				kk++;
 			}
@@ -268,7 +274,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		{
 			// STARTING SCRIPT
 			std::string yov=wrkf;
-			yov+="flavor.txt";
+			yov+="media\\flavor.txt";
 			CAppTextScriptReader *scri=new CAppTextScriptReader();
 			BOOL hhh=scri->InitTextScript(yov.c_str());
 			if(hhh)
@@ -439,6 +445,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				if(CurrentFrame->HasBg)
 				{
 					std::string hov=wrkf;
+					hov+="media\\";
 					hov+=CurrentFrame->bg;
 					uu=new CBitmapTexture(hov.c_str());
 				}
