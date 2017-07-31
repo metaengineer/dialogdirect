@@ -1,17 +1,20 @@
 // direct.cpp : Defines the entry point for the application.
 //
 
-
+#define WIN32
+#define WINNT 0x501
+#define _WINDOWS
+#include "common.h"
 #include "direct.h"
-#include "objbase.h"
 #include "Ustring.h"
 #include "RlmRunner9.h"
-#include "shlwapi.h"
 #include <string>
+#include <stdlib.h>
+#include <winbase.h>
 #ifdef _DEBUG
 	#define _CRTDBG_MAP_ALLOC
 	#include <stdlib.h>
-	#include <crtdbg.h>
+	//#include <crtdbg.h>
 #endif
 
 #include "Bitmaps.h"
@@ -195,7 +198,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					if(y)
 					{
 						LPTSTR ggf=new char[y+1];
-						strncpy_s(ggf, y+1, &(lpCmdLine[eks+1]), _TRUNCATE);
+						strncpy(ggf, &(lpCmdLine[eks+1]), y+1);
 						wrkf=std::string(ggf);
 						delete[] ggf;
 					}
@@ -215,7 +218,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	}
 
  	MSG msg;
-	SecureZeroMemory(&msg, sizeof(MSG));
+	RtlZeroMemory(&msg, sizeof(MSG));
 
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_DIRECT, szWindowClass, MAX_LOADSTRING);
@@ -541,12 +544,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 						if(hctrl==cma->GetHandle(1))
 						{
 							if(vars)
-								vars->SetVar(cma->VarLink,max(cma->a,vars->GetVar(cma->VarLink)-1.0f));
+								vars->SetVar(cma->VarLink,std::max((float)cma->a,vars->GetVar(cma->VarLink)-1.0f));
 						}
 						if(hctrl==cma->GetHandle(2))
 						{
 							if(vars)
-								vars->SetVar(cma->VarLink,min(cma->b,vars->GetVar(cma->VarLink)+1.0f));
+								vars->SetVar(cma->VarLink,std::min((float)cma->b,vars->GetVar(cma->VarLink)+1.0f));
 						}
 					}
 					bna=bna->snext;

@@ -9,7 +9,7 @@ CMenuControl::CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LP
 	actlen=0;
 	namelen=strlen(cname);
 	CtlName=new char[namelen+1];
-	strcpy_s(CtlName, namelen+1, cname);
+	strcpy(CtlName, cname);
 	IsActive=FALSE;
 	InputEnabled=FALSE;
 	IsVisible=FALSE;
@@ -37,7 +37,7 @@ void CMenuControl::SetAdditional(LONG param1, LONG param2, LPCSTR str)
 		delete[] act;
 	actlen=strlen(str);
 	act=new char[actlen+1];
-	strcpy_s(act, actlen+1, str);
+	strcpy(act, str);
 }
 
 BOOL CMenuControl::RegexName(int in)
@@ -290,7 +290,7 @@ SFrameChain::SFrameChain(LPCSTR fn)
 	this->snext=NULL;
 	this->namelen=strlen(fn)+1;
 	this->name=new char[namelen];
-	strcpy_s(name, namelen, fn);
+	strcpy(name, fn);
 	this->ctrls=NULL;
 	this->flags=0;
 	this->back=NULL;

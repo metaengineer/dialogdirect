@@ -1,6 +1,8 @@
 #ifndef IMAGECLASSES_PCX_H
 #define IMAGECLASSES_PCX_H
 
+#include <windows.h>
+
 struct PCXHeader
 {
 	BYTE Manufacturer;

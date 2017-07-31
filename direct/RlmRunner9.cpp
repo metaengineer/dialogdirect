@@ -18,7 +18,7 @@ CRealm::CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir)
 	sk=NULL;
 	size_t sdr=strlen(RlmDir)+1;
 	RealmDir=new char[sdr];
-	strcpy_s(RealmDir, sdr, RlmDir);
+	strcpy(RealmDir, RlmDir);
 
 	WNDCLASSEX bla;
 	bla.cbClsExtra=0;

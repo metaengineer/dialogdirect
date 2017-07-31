@@ -3,6 +3,7 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="direct" />
+		<Option platforms="Windows;" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -12,16 +13,12 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-std=c++98" />
-					<Add option="/DWIN32" />
-					<Add option="/D_DEBUG" />
-					<Add option="/D_WINDOWS" />
-					<Add option="/W3" />
-					<Add option="/Zi" />
-					<Add option="/Od" />
-					<Add option="/MDd" />
+					<Add option="-std=c++11" />
+					<Add option="-m32" />
+					<Add option="-g" />
 				</Compiler>
 				<Linker>
+					<Add option="-m32" />
 					<Add library="ole32" />
 					<Add library="comctl32" />
 					<Add library="user32" />
@@ -41,15 +38,9 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-std=c++98" />
-					<Add option="/DWIN32" />
-					<Add option="/DNDEBUG" />
-					<Add option="/D_WINDOWS" />
-					<Add option="/W3" />
-					<Add option="/MD" />
+					<Add option="-std=c++11" />
 				</Compiler>
 				<Linker>
-					<Add option="/INCREMENTAL:NO" />
 					<Add library="ole32" />
 					<Add library="comctl32" />
 					<Add library="user32" />
@@ -96,6 +87,7 @@
 		<Unit filename="Ustring.h" />
 		<Unit filename="VarStorage.cpp" />
 		<Unit filename="VarStorage.h" />
+		<Unit filename="common.h" />
 		<Unit filename="direct.cpp" />
 		<Unit filename="direct.h" />
 		<Unit filename="direct.ico" />

@@ -1,6 +1,8 @@
 #ifndef IMAGECLASSES_TARGA_H
 #define IMAGECLASSES_TARGA_H
 
+#include <windows.h>
+
 struct TargaHeaderA
 {
 	BYTE IdLength;

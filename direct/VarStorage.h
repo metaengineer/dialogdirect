@@ -1,6 +1,8 @@
 #ifndef VARSTORAGE_H
 #define VARSTORAGE_H
 
+#include <windows.h>
+
 class SVarStorage
 {
 private:

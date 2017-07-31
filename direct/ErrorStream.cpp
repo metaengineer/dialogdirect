@@ -52,7 +52,7 @@ void CMessageCache::DropMessage(LPCSTR dro, BYTE lvl)
 	{
 		size_t nt=strlen(dro)+1;
 		blocks[cursor]=new char[WORD(nt)];
-		strcpy_s(blocks[cursor], WORD(nt), dro);
+		strcpy(blocks[cursor], dro);
 		lngs[cursor]=WORD(nt);
 		cursor++;
 	}
@@ -62,7 +62,7 @@ void CMessageCache::DropMessage(LPCSTR dro, BYTE lvl)
 		_Revolve();
 		size_t nt=strlen(dro)+1;
 		blocks[cursor]=new char[WORD(nt)];
-		strcpy_s(blocks[cursor], WORD(nt), dro);
+		strcpy(blocks[cursor], dro);
 		lngs[cursor]=WORD(nt);
 		// TODO: maybe this is too slow and needs better method
 	}

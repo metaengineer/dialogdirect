@@ -1,4 +1,4 @@
-#include "wingdi.h"
+#include "common.h"
 
 #ifndef UTIL_FONTS_H
 #define UTIL_FONTS_H

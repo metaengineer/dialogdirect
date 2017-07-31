@@ -1,3 +1,4 @@
+#include "common.h"
 #include "autostop.h"
 
 #ifndef RLMRUNNER_ERROR_STREAM

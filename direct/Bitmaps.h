@@ -1,4 +1,4 @@
-#include "wingdi.h"
+#include "common.h"
 #include "PCX.h"
 #include "TGA.h"
 

@@ -1,6 +1,8 @@
 #ifndef UTIL_SCRIPTPARSER_H
 #define UTIL_SCRIPTPARSER_H
 
+#include <windows.h>
+
 class CAppTextScriptReader
 {
 private:

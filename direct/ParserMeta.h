@@ -1,13 +1,14 @@
 #include "Parser.h"
-#include "commctrl.h"
+#include <commctrl.h>
 #include "Fonts.h"
 #include <list>
+#include <string>
 #include "Bitmaps.h"
 
 #ifndef UTIL_METAPARSER_H
 #define UTIL_METAPARSER_H
 
-class CMenuControl abstract
+class CMenuControl // abstract
 {
 protected:
 	HINSTANCE ParentInstance;
@@ -26,7 +27,7 @@ public:
 	int VarLink;
 	int Rqux;
 	int Rquy;
-	std::list<std::pair<int,LPCSTR>> Hash;
+	std::list<std::pair<int,LPCSTR> > Hash;
 public:
 	CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname);
 	void SetAdditional(LONG param1, LONG param2, LPCSTR str);

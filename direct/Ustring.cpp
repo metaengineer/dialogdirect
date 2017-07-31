@@ -10,7 +10,7 @@ std::string GlobalDoubleAsString(double m, unsigned short precision)
 	unsigned int ef;
 	for (ef=1;ef<=precision;ef++)
 		mvalue=mvalue*(long long)10;
-	long long indata=long long(m*mvalue);
+	long long indata=(long long)(m*mvalue);
 	long long a=indata;
 	if(a<0)
 	{
