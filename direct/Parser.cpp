@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Parser.h"
 
 CAppTextScriptReader::CAppTextScriptReader()
@@ -11,7 +10,7 @@ BOOL CAppTextScriptReader::InitTextScript(LPCSTR file)
 {
 	if(IsActive)
 		return FALSE;
-	hFile=CreateFileA(file, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL); 
+	hFile=CreateFileA(file, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if(hFile==INVALID_HANDLE_VALUE)
 	{
 		return FALSE;
@@ -61,7 +60,7 @@ BOOL CAppTextScriptReader::_ExpectLetter(char lt)
 			return true;
 		}
 		else
-		{ 
+		{
 			delete buffer;
 			delete numbuffer;
 			return false;
@@ -178,7 +177,7 @@ double CAppTextScriptReader::ReadDouble(int precision)
 	if(!IsActive)
 		return -1;
 	MoveNextWord();
-	
+
 	//first part declarations
 	char *buffer;
 	DWORD *numbuffer;
@@ -197,7 +196,7 @@ double CAppTextScriptReader::ReadDouble(int precision)
 	int ppalue;
 	int pvalue = 0;
 	bool readfurther;
-	
+
 	//first part initializations
 	numbuffer = new DWORD;
 	*numbuffer = 1;
@@ -273,7 +272,7 @@ double CAppTextScriptReader::ReadDouble(int precision)
 				readfurther=false;
 				pvalue*=10;
 				schiotchik++;
-			}				
+			}
 		}
 		delete precbuffer;
 		delete precnumbuffer;

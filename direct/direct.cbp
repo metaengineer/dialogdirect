@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="direct" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="direct" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug Win32" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++98" />
+					<Add option="/DWIN32" />
+					<Add option="/D_DEBUG" />
+					<Add option="/D_WINDOWS" />
+					<Add option="/W3" />
+					<Add option="/Zi" />
+					<Add option="/Od" />
+					<Add option="/MDd" />
+				</Compiler>
+				<Linker>
+					<Add library="ole32" />
+					<Add library="comctl32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="shlwapi" />
+					<Add library="winmm" />
+					<Add library="d3d9" />
+					<Add library="d3dx9d" />
+					<Add library="dxguid" />
+					<Add library="dsound" />
+					<Add library="dinput8" />
+				</Linker>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="direct" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release Win32" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++98" />
+					<Add option="/DWIN32" />
+					<Add option="/DNDEBUG" />
+					<Add option="/D_WINDOWS" />
+					<Add option="/W3" />
+					<Add option="/MD" />
+				</Compiler>
+				<Linker>
+					<Add option="/INCREMENTAL:NO" />
+					<Add library="ole32" />
+					<Add library="comctl32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="shlwapi" />
+					<Add library="winmm" />
+					<Add library="d3d9" />
+					<Add library="d3dx9" />
+					<Add library="dxguid" />
+					<Add library="dsound" />
+					<Add library="dinput8" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++98" />
+			<Add directory="C:/Program Files/Microsoft DirectX 9.0 SDK (June 2005)/Include" />
+		</Compiler>
+		<Linker>
+			<Add directory="C:/Program Files/Microsoft DirectX 9.0 SDK (June 2005)/Lib/X86" />
+		</Linker>
+		<Unit filename="AutoStop.h" />
+		<Unit filename="Bitmaps.cpp" />
+		<Unit filename="Bitmaps.h" />
+		<Unit filename="ErrorStream.cpp" />
+		<Unit filename="ErrorStream.h" />
+		<Unit filename="Fonts.cpp" />
+		<Unit filename="Fonts.h" />
+		<Unit filename="MetaScreen.cpp" />
+		<Unit filename="MetaScreen.h" />
+		<Unit filename="PCX.cpp" />
+		<Unit filename="PCX.h" />
+		<Unit filename="Parser.cpp" />
+		<Unit filename="Parser.h" />
+		<Unit filename="ParserMeta.cpp" />
+		<Unit filename="ParserMeta.h" />
+		<Unit filename="RlmRunner9.cpp" />
+		<Unit filename="RlmRunner9.h" />
+		<Unit filename="RlmRunnerEngine.cpp" />
+		<Unit filename="RlmRunnerEngine.h" />
+		<Unit filename="TGA.cpp" />
+		<Unit filename="TGA.h" />
+		<Unit filename="Ustring.cpp" />
+		<Unit filename="Ustring.h" />
+		<Unit filename="VarStorage.cpp" />
+		<Unit filename="VarStorage.h" />
+		<Unit filename="direct.cpp" />
+		<Unit filename="direct.h" />
+		<Unit filename="direct.ico" />
+		<Unit filename="direct.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="handler.cpp" />
+		<Unit filename="handler.h" />
+		<Unit filename="resource.h" />
+		<Unit filename="small.ico" />
+		<Unit filename="stdafx.cpp" />
+		<Unit filename="stdafx.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

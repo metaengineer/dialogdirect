@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Parser.h"
 #include "commctrl.h"
 #include "Fonts.h"

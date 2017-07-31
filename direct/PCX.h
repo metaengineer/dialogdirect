@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #ifndef IMAGECLASSES_PCX_H
 #define IMAGECLASSES_PCX_H
 

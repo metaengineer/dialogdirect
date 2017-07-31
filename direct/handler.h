@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "stdio.h"
 
 // File writer classes

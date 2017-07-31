@@ -1,7 +1,7 @@
 // direct.cpp : Defines the entry point for the application.
 //
 
-#include "stdafx.h"
+
 #include "direct.h"
 #include "objbase.h"
 #include "Ustring.h"
@@ -196,7 +196,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					{
 						LPTSTR ggf=new char[y+1];
 						strncpy_s(ggf, y+1, &(lpCmdLine[eks+1]), _TRUNCATE);
-						wrkf=std::string(ggf);	
+						wrkf=std::string(ggf);
 						delete[] ggf;
 					}
 				}
@@ -216,7 +216,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
  	MSG msg;
 	SecureZeroMemory(&msg, sizeof(MSG));
-	
+
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_DIRECT, szWindowClass, MAX_LOADSTRING);
 	WNDCLASSEX wcex;
@@ -257,7 +257,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		gf.right=810;
 		AdjustWindowRect(&gf, WS_POPUP|WS_CAPTION|WS_THICKFRAME, FALSE);
 
-		OwnWnd = CreateWindow(szWindowClass, szTitle, 
+		OwnWnd = CreateWindow(szWindowClass, szTitle,
 			WS_OVERLAPPED|WS_SYSMENU|WS_CAPTION|WS_MINIMIZEBOX|WS_THICKFRAME|WS_VISIBLE,
 			gf.left, gf.top, gf.right-gf.left, gf.bottom-gf.top, HWND_DESKTOP, NULL, hInstance, NULL);
 
@@ -269,7 +269,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 			CAppTextScriptReader *scri=new CAppTextScriptReader();
 			BOOL hhh=scri->InitTextScript(yov.c_str());
 			if(hhh)
-			{	
+			{
 				DWORD fvt=0;
 				if(scri->ExpectWord("vars",4))
 				{
@@ -285,7 +285,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					SFrameChain **ihu=&frames;
 					while(*ihu)
 					{
-						ihu=&((*ihu)->snext);	
+						ihu=&((*ihu)->snext);
 					}
 					{
 						scri->MoveNextWord();
@@ -318,14 +318,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							scri->_ExpectLetter('\"');
 							DWORD uj=scri->PreRecordIdentifierBraces('\"');
 							LPSTR bun=new char[uj+1];
-							scri->RecordIdentifierBraces(bun, uj, '\"'); 
+							scri->RecordIdentifierBraces(bun, uj, '\"');
 							SMenuControls **ysy=&((*ihu)->ctrls);
 							while(*ysy)
 								ysy=&((*ysy)->snext);
 							int xb=scri->ReadWholeNumber();
 							int yb=scri->ReadWholeNumber();
-							CMenuControl *thi=new CMenuControlButton(hInst, OwnWnd, 
-								xb, yb, 0, bun); 
+							CMenuControl *thi=new CMenuControlButton(hInst, OwnWnd,
+								xb, yb, 0, bun);
 							(*ysy)=new SMenuControls(thi);
 							delete[] bun;
 							scri->MoveNextWord();
@@ -348,7 +348,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							scri->_ExpectLetter('\"');
 							DWORD uj=scri->PreRecordIdentifierBraces('\"');
 							LPSTR bun=new char[uj+1];
-							scri->RecordIdentifierBraces(bun, uj, '\"'); 
+							scri->RecordIdentifierBraces(bun, uj, '\"');
 							SMenuControls **ysy=&((*ihu)->ctrls);
 							while(*ysy)
 								ysy=&((*ysy)->snext);
@@ -356,8 +356,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 							int yq=scri->ReadWholeNumber();
 							WORD varg=scri->ReadWholeNumber();
 							WORD wi=scri->ReadWholeNumber();
-							CMenuControl *thi=new CMenuControlText(hInst, OwnWnd, 
-								xq, yq, wi, MAKEWORD(1, 0), varg, bun); 
+							CMenuControl *thi=new CMenuControlText(hInst, OwnWnd,
+								xq, yq, wi, MAKEWORD(1, 0), varg, bun);
 							(*ysy)=new SMenuControls(thi);
 							delete[] bun;
 							BOOL regexforth=TRUE;
@@ -380,7 +380,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 						{
 
 						}
-						
+
 						if(scri->ExpectWord("begin",5))
 						{
 							while(true)
@@ -618,7 +618,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				delete frames;
 			frames=NULL;
 			program=new CRealm(hInst, OwnWnd, (LPCSTR)(LPVOID)lParam);
-			Messenger=CreateWindowEx(0, "Edit", "", 
+			Messenger=CreateWindowEx(0, "Edit", "",
 				WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_READONLY | ES_MULTILINE | ES_AUTOVSCROLL,
 				0, 0, 800, 600, OwnWnd, NULL, hInst, NULL);
 			SendMessage(Messenger, EM_SETLIMITTEXT, 32*256, 0);

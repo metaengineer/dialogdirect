@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #ifndef IMAGECLASSES_TARGA_H
 #define IMAGECLASSES_TARGA_H
 

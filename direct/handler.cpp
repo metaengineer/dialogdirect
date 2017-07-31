@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "handler.h"
 #include "stdio.h"
 
@@ -17,8 +16,8 @@ bool CInHandler::CInInit(LPCSTR LandInString)
 							FILE_ATTRIBUTE_NORMAL,
 							NULL);
 
-	if (LandInFile == INVALID_HANDLE_VALUE) 
-	{ 
+	if (LandInFile == INVALID_HANDLE_VALUE)
+	{
 		MessageBox(NULL, "Could not open file", "Error", MB_OK);
 		return false;
 	}
@@ -118,8 +117,8 @@ bool COutHandler::COutInitCreate(LPCSTR LandOutString)
 							 FILE_ATTRIBUTE_NORMAL,
 							 NULL);
 
-	if (LandOutFile == INVALID_HANDLE_VALUE) 
-	{ 
+	if (LandOutFile == INVALID_HANDLE_VALUE)
+	{
 		MessageBox(ErrorMsgOwnership, "Could not create file with specified path", "Handler", MB_OK | MB_ICONERROR);
 		return false;
 	}
@@ -139,8 +138,8 @@ bool COutHandler::COutInitOpen(LPCSTR LandOutString)
 							 FILE_ATTRIBUTE_NORMAL,
 							 NULL);
 
-	if (LandOutFile == INVALID_HANDLE_VALUE) 
-	{ 
+	if (LandOutFile == INVALID_HANDLE_VALUE)
+	{
 		MessageBox(ErrorMsgOwnership, "Could not open file for writing", "Handler", MB_OK | MB_ICONERROR);
 		return false;
 	}
@@ -303,7 +302,7 @@ bool COutHandler::FWriteNumberFixedPoint(float indatafl, unsigned int multiply)
 		if(!writeresult)
 			netglukov=false;
 		if(i==(5-multiply))
-			break;	
+			break;
 	}
 	*buffer=char(32);
 	if(!WriteFile(LandOutFile, buffer, 1, &writeresult, NULL))

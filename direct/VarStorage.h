@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #ifndef VARSTORAGE_H
 #define VARSTORAGE_H
 

@@ -1,11 +1,10 @@
-#include "stdafx.h"
 #include "PCX.h"
 #include <new>
 
 BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 {
-	HANDLE hFile = CreateFile(file, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);        
-	if(hFile == INVALID_HANDLE_VALUE) 
+	HANDLE hFile = CreateFile(file, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	if(hFile == INVALID_HANDLE_VALUE)
 		return FALSE;
 	PCXHeader rex;
 	DWORD dwRead;
@@ -17,7 +16,7 @@ BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 	if(dwRead<sizeof(rex))
 	{
 		CloseHandle(hFile);
-		return FALSE;	
+		return FALSE;
 	}
 
 	*iy=rex.YMax-rex.YMin+1;
@@ -26,7 +25,7 @@ BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 	int iImageSize=(*iy)*rex.BytesPerLine;
 	int PaletteSize=0;
 	LONG sz=(*ix)*(*iy);
-	
+
 	BYTE *buf;
 	try
 	{
@@ -35,7 +34,7 @@ BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 	catch(std::bad_alloc a)
 	{
 		CloseHandle(hFile);
-		return FALSE;	
+		return FALSE;
 	}
 	try
 	{
@@ -45,7 +44,7 @@ BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 	{
 		delete[] buf;
 		CloseHandle(hFile);
-		return FALSE;		
+		return FALSE;
 	}
 	if(!ReadFile(hFile, buf, iImageSize, &dwRead, NULL))
 	{
@@ -63,7 +62,7 @@ BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 		CloseHandle(hFile);
 		return FALSE;
 	}
-	
+
 	switch(rex.BitsPerPixel)
 	{
 	case 1:
@@ -76,7 +75,7 @@ BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 			ou=buf[s/8];
 			for(int fq=0; fq<8; fq++)
 			{
-				ow=(ou&(1<<fq))?3:0;	
+				ow=(ou&(1<<fq))?3:0;
 				ff[s+fq]=MAKELONG(MAKEWORD(rex.Palette[ow+2],rex.Palette[ow+1]),
 					MAKEWORD(rex.Palette[ow],0));
 			}
@@ -104,7 +103,7 @@ BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 	{
 		BYTE *bSurf=buf+dwRead;
 		if(!ReadFile(hFile, bSurf, 769, &dwRead, NULL))
-		{	
+		{
 			delete[] buf;
 			delete[] (*pvData);
 			*pvData=NULL;
@@ -112,7 +111,7 @@ BOOL UtilLoadPCX(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 			return FALSE;
 		}
 		if(dwRead<769)
-		{	
+		{
 			delete[] buf;
 			delete[] (*pvData);
 			*pvData=NULL;

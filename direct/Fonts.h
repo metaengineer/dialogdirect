@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "wingdi.h"
 
 #ifndef UTIL_FONTS_H

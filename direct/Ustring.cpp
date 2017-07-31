@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Ustring.h"
 
 std::string GlobalDoubleAsString(double m, unsigned short precision)

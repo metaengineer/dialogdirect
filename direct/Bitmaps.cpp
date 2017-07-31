@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Bitmaps.h"
 #include <new>
 #include <cmath>
@@ -6,11 +5,11 @@
 
 BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 {
-	HANDLE hFile = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);        
-	if(hFile == INVALID_HANDLE_VALUE) 
+	HANDLE hFile = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	if(hFile == INVALID_HANDLE_VALUE)
 		return FALSE;
 
-	BITMAPFILEHEADER bmpfilehdr;  
+	BITMAPFILEHEADER bmpfilehdr;
 	DWORD dwRead;
 	if(!ReadFile(hFile, &bmpfilehdr, sizeof(bmpfilehdr), &dwRead, NULL))
 	{
@@ -75,7 +74,7 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 	catch(std::bad_alloc a)
 	{
 		CloseHandle(hFile);
-		return FALSE;	
+		return FALSE;
 	}
 	if(!ReadFile(hFile, buf, iImageSize, &dwRead, NULL))
 	{
@@ -94,17 +93,17 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 	{
 		delete[] buf;
 		CloseHandle(hFile);
-		return FALSE;	
+		return FALSE;
 	}
 	try
 	{
-		*ppvData=new DWORD[(*pImagex)*(*pImagey)];	
+		*ppvData=new DWORD[(*pImagex)*(*pImagey)];
 	}
 	catch(std::bad_alloc t)
 	{
 		delete[] buf;
 		CloseHandle(hFile);
-		return FALSE;		
+		return FALSE;
 	}
 	switch(bmpinfohdr.biBitCount)
 	{
@@ -209,13 +208,13 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 		int bytesgiven=(((*pImagex)+1)/2)*4;
 		DWORD* btSurf = *ppvData;
 		BYTE* imagebits = (BYTE*)(&buf[((*pImagey)-1)*bytesgiven]);
-	
+
 		for (int i=0; i<(*pImagey); i++)
 		{
 			WORD* tlImage=(WORD*)imagebits;
 			for (int p=0; p<(*pImagex); p++)
 			{
-				*btSurf = (DWORD)(((*tlImage&31)<<3) | ((*tlImage&(31<<5))<<6) | 
+				*btSurf = (DWORD)(((*tlImage&31)<<3) | ((*tlImage&(31<<5))<<6) |
 					           ((*tlImage&(31<<10))<<9) | (0xFF<<24));
 				tlImage++;
 				btSurf++;
@@ -229,13 +228,13 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 		int bytesgiven=((*pImagex)*3+3) & ~3;
 		DWORD* btSurf = *ppvData;
 		BYTE* imagebits = (BYTE*)(&buf[((*pImagey)-1)*bytesgiven]);
-	
+
 		for (int i=0; i<(*pImagey); i++)
 		{
 			RGBTRIPLE* tlImage=(RGBTRIPLE*)imagebits;
 			for (int p=0; p<(*pImagex); p++)
 			{
-				*btSurf = (DWORD)((tlImage->rgbtBlue) | (tlImage->rgbtGreen << 8) | 
+				*btSurf = (DWORD)((tlImage->rgbtBlue) | (tlImage->rgbtGreen << 8) |
 					           (tlImage->rgbtRed << 16) | (0xFF << 24));
 				tlImage++;
 				btSurf++;
@@ -254,7 +253,7 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 			RGBQUAD* tlImage=(RGBQUAD*)imagebits;
 			for (int p=0; p<(*pImagex); p++)
 			{
-				*btSurf = (DWORD)((tlImage->rgbBlue) | (tlImage->rgbGreen << 8) | 
+				*btSurf = (DWORD)((tlImage->rgbBlue) | (tlImage->rgbGreen << 8) |
 					(tlImage->rgbRed << 16) | (tlImage->rgbReserved << 24));
 				tlImage++;
 				btSurf++;
@@ -267,7 +266,7 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 
 	delete [] buf;
 	CloseHandle(hFile);
-	return TRUE;	
+	return TRUE;
 }
 
 BOOL UtilSaveBitmap(LPCSTR path, DWORD *pDataRgb, LONG ix, LONG iy, int SaveFmt)
@@ -307,7 +306,7 @@ BOOL UtilSaveBitmap(LPCSTR path, DWORD *pDataRgb, LONG ix, LONG iy, int SaveFmt)
 	}
 	catch(std::bad_alloc r)
 	{
-		return FALSE;	
+		return FALSE;
 	}
 	BITMAPFILEHEADER fal;
 	fal.bfSize=sizeof(BITMAPFILEHEADER);

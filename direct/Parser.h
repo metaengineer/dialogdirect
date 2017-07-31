@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #ifndef UTIL_SCRIPTPARSER_H
 #define UTIL_SCRIPTPARSER_H
 
@@ -18,7 +16,7 @@ public:
 	ULONG PreRecordIdentifierBraces(char brace);
 	void RecordIdentifier(char *buf, ULONG chsize);
 	void RecordIdentifierBraces(char *buf, ULONG chsize, char brace);
-	
+
 	BOOL ExpectWord(LPCSTR word, int count);
 	LONG ReadWholeNumber();
 	double ReadDouble(int precision);

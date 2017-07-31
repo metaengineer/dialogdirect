@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "RlmRunner9.h"
 #include <string>
 
@@ -51,7 +50,7 @@ CRealm::CRealm(HINSTANCE pins, HWND pwnd, LPCSTR RlmDir)
 
 		if(DxWnd)
 			IsWindow=TRUE;
-		
+
 		roo=Direct3DCreate9(D3D_SDK_VERSION);
 		if(roo)
 			IsInterface=TRUE;
@@ -172,7 +171,7 @@ void CRealm::_PrintCap(COutHandler *oot, D3DCAPS9 *wger)
     oot->FWriteWholeNumberP(wger->MaxTextureRepeat);
     oot->FWriteWholeNumberP(wger->MaxTextureAspectRatio);
     oot->FWriteWholeNumberP(wger->MaxAnisotropy);
-    
+
 	oot->FWriteNumberFixedPoint(wger->MaxVertexW,4);oot->FWriteByte("\r\n",2);
     oot->FWriteNumberFixedPoint(wger->GuardBandLeft,4);oot->FWriteByte("\r\n",2);
     oot->FWriteNumberFixedPoint(wger->GuardBandTop,4);oot->FWriteByte("\r\n",2);
@@ -182,7 +181,7 @@ void CRealm::_PrintCap(COutHandler *oot, D3DCAPS9 *wger)
     oot->FWriteNumberFixedPoint(wger->MaxPointSize,4);oot->FWriteByte("\r\n",2);
     oot->FWriteNumberFixedPoint(wger->PixelShader1xMaxValue,4);oot->FWriteByte("\r\n",2);
     oot->FWriteNumberFixedPoint(wger->MaxNpatchTessellationLevel,4);oot->FWriteByte("\r\n",2);
-    
+
 	oot->FWriteWholeNumberP(wger->StencilCaps);
     oot->FWriteWholeNumberP(wger->FVFCaps);
     oot->FWriteWholeNumberP(wger->TextureOpCaps);
@@ -207,7 +206,7 @@ void CRealm::_PrintCap(COutHandler *oot, D3DCAPS9 *wger)
     oot->FWriteWholeNumberP(wger->DeclTypes);
     oot->FWriteWholeNumberP(wger->NumSimultaneousRTs);
     oot->FWriteWholeNumberP(wger->StretchRectFilterCaps);
-    
+
 	oot->FWriteWholeNumberP(wger->VertexTextureFilterCaps);
     oot->FWriteWholeNumberP(wger->MaxVShaderInstructionsExecuted);
     oot->FWriteWholeNumberP(wger->MaxPShaderInstructionsExecuted);
@@ -218,7 +217,7 @@ void CRealm::_PrintCap(COutHandler *oot, D3DCAPS9 *wger)
 BOOL CRealm::Initialize()
 {
 	// for now: check DEVCAPS with REF and HAL modes, output them to file
-	// no directx functions beyond Jun 2005 release 
+	// no directx functions beyond Jun 2005 release
 	if(!IsInterface)
 		return FALSE;
 	UINT nuads=roo->GetAdapterCount();
@@ -253,7 +252,7 @@ BOOL CRealm::Initialize()
 		oua->FWriteByte("\r\n",2);
 		oua->FWriteByte(er.Driver, strlen(er.Driver));
 		oua->FWriteByte("\r\n",2);
-		
+
 		D3DCAPS9 rfe;
 		ana=D3DDEVTYPE_REF;
 		roo->GetDeviceCaps(y, ana, &rfe);
@@ -288,7 +287,7 @@ BOOL CRealm::Initialize()
 		parm.BackBufferHeight=600;
 	break;
 	}
-	
+
 	parm.BackBufferCount=1;
 	parm.AutoDepthStencilFormat=D3DFMT_D16;
 	parm.EnableAutoDepthStencil=FALSE; // for now

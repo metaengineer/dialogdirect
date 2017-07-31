@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "ParserMeta.h"
 
 CMenuControl::CMenuControl(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname)
@@ -92,7 +91,7 @@ void CMenuControl::Activity(BOOL bAct)
 	if(bAct)
 		SetWindowLong(CtlWnd, GWL_STYLE, WS_CHILD|WS_VISIBLE);
 	else
-		SetWindowLong(CtlWnd, GWL_STYLE, WS_CHILD|WS_VISIBLE|WS_DISABLED);	
+		SetWindowLong(CtlWnd, GWL_STYLE, WS_CHILD|WS_VISIBLE|WS_DISABLED);
 }
 
 void CMenuControl::Visibility(BOOL bShow)
@@ -112,7 +111,7 @@ HWND CMenuControl::GetHandle(UINT wh)
 
 CMenuControlButton::CMenuControlButton(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("Button", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 50, pwnd, NULL, pins, NULL); 
+	CtlWnd=CreateWindowA("Button", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 50, pwnd, NULL, pins, NULL);
 }
 
 CMenuControlButton::~CMenuControlButton()
@@ -122,9 +121,9 @@ CMenuControlButton::~CMenuControlButton()
 
 CMenuControlSlider::CMenuControlSlider(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("Button", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 50, pwnd, NULL, pins, NULL); 
-	CtlWnd=CreateWindowA("Button", "<", WS_VISIBLE|WS_CHILD, x-50, y, 50, 50, pwnd, NULL, pins, NULL); 
-	CtlWnd=CreateWindowA("Button", ">", WS_VISIBLE|WS_CHILD, x+150, y, 50, 50, pwnd, NULL, pins, NULL); 
+	CtlWnd=CreateWindowA("Button", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 50, pwnd, NULL, pins, NULL);
+	CtlWnd=CreateWindowA("Button", "<", WS_VISIBLE|WS_CHILD, x-50, y, 50, 50, pwnd, NULL, pins, NULL);
+	CtlWnd=CreateWindowA("Button", ">", WS_VISIBLE|WS_CHILD, x+150, y, 50, 50, pwnd, NULL, pins, NULL);
 }
 
 HWND CMenuControlSlider::GetHandle(UINT wh)
@@ -148,11 +147,11 @@ void CMenuControlSlider::Activity(BOOL bAct)
 	{
 		SetWindowLong(CtlWnd, GWL_STYLE, WS_CHILD|WS_VISIBLE);
 		SetWindowLong(OwnWndL, GWL_STYLE, WS_CHILD|WS_VISIBLE);
-		SetWindowLong(OwnWndR, GWL_STYLE, WS_CHILD|WS_VISIBLE);	
+		SetWindowLong(OwnWndR, GWL_STYLE, WS_CHILD|WS_VISIBLE);
 	}
 	else
 	{
-		SetWindowLong(CtlWnd, GWL_STYLE, WS_CHILD|WS_VISIBLE|WS_DISABLED);	
+		SetWindowLong(CtlWnd, GWL_STYLE, WS_CHILD|WS_VISIBLE|WS_DISABLED);
 		SetWindowLong(OwnWndL, GWL_STYLE, WS_CHILD|WS_VISIBLE|WS_DISABLED);
 		SetWindowLong(OwnWndR, GWL_STYLE, WS_CHILD|WS_VISIBLE|WS_DISABLED);
 	}
@@ -174,7 +173,7 @@ CMenuControlSlider::~CMenuControlSlider()
 
 CMenuControlCheckbox::CMenuControlCheckbox(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("Checkbox", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 50, pwnd, NULL, pins, NULL); 
+	CtlWnd=CreateWindowA("Checkbox", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 50, pwnd, NULL, pins, NULL);
 }
 
 CMenuControlCheckbox::~CMenuControlCheckbox()
@@ -184,7 +183,7 @@ CMenuControlCheckbox::~CMenuControlCheckbox()
 
 CMenuControlImage::CMenuControlImage(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("Button", CtlName, WS_VISIBLE|WS_CHILD, x, y, 80, 40, pwnd, NULL, pins, NULL); 
+	CtlWnd=CreateWindowA("Button", CtlName, WS_VISIBLE|WS_CHILD, x, y, 80, 40, pwnd, NULL, pins, NULL);
 }
 
 CMenuControlImage::~CMenuControlImage()
@@ -194,7 +193,7 @@ CMenuControlImage::~CMenuControlImage()
 
 CMenuControlField::CMenuControlField(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("EDIT", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 40, pwnd, NULL, pins, NULL); 
+	CtlWnd=CreateWindowA("EDIT", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 40, pwnd, NULL, pins, NULL);
 }
 
 CMenuControlField::~CMenuControlField()
@@ -204,12 +203,12 @@ CMenuControlField::~CMenuControlField()
 
 CMenuControlText::CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 20, pwnd, NULL, pins, NULL); 	
+	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, 150, 20, pwnd, NULL, pins, NULL);
 }
 
 CMenuControlText::CMenuControlText(HINSTANCE pins, HWND pwnd, int x, int y, WORD wi, WORD group, int var1, LPCSTR cname) : CMenuControl(pins, pwnd, x, y, var1, cname)
 {
-	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, wi, 20, pwnd, NULL, pins, NULL); 
+	CtlWnd=CreateWindowA("STATIC", CtlName, WS_VISIBLE|WS_CHILD, x, y, wi, 20, pwnd, NULL, pins, NULL);
 	a=wi;
 	b=group;
 }
@@ -236,7 +235,7 @@ SMenuMenu::~SMenuMenu()
 SMenuTabs::SMenuTabs(HINSTANCE pins, HWND pwnd, UINT order, LPCSTR name)
 {
 	snext=NULL;
-	ThisTab=new CMenuControlButton(pins, pwnd, 100+150*order, 50, 0, name); 
+	ThisTab=new CMenuControlButton(pins, pwnd, 100+150*order, 50, 0, name);
 }
 
 SMenuTabs::~SMenuTabs()

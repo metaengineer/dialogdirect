@@ -1,11 +1,10 @@
-#include "stdafx.h"
 #include "TGA.h"
 #include <new>
 
 BOOL UtilLoadTarga(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 {
-	HANDLE hFile = CreateFile(file, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);        
-	if(hFile == INVALID_HANDLE_VALUE) 
+	HANDLE hFile = CreateFile(file, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	if(hFile == INVALID_HANDLE_VALUE)
 		return FALSE;
 
 	TargaHeaderA imhead;
@@ -218,7 +217,7 @@ BOOL UtilLoadTarga(LPCSTR file, DWORD **pvData, LONG *ix, LONG *iy)
 			break;
 		}
 		delete[] uui;
-	}	
+	}
 	CloseHandle(hFile);
 	return TRUE;
 }

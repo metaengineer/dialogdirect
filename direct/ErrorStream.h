@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "autostop.h"
 
 #ifndef RLMRUNNER_ERROR_STREAM

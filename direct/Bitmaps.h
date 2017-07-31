@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "wingdi.h"
 #include "PCX.h"
 #include "TGA.h"
@@ -19,7 +18,7 @@ private:
 	HBITMAP OwnBitmap;
 public:
 	CBitmapTexture(LPCSTR FilePath, UINT format);
-	CBitmapTexture(LPCSTR FileNoExt); // any format 
+	CBitmapTexture(LPCSTR FileNoExt); // any format
 	UINT GetInfo();
 	LONG GetX();
 	LONG GetY();

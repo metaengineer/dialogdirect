@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "VarStorage.h"
 
 SVarStorage::SVarStorage(UINT qu)
@@ -11,7 +10,7 @@ SVarStorage::SVarStorage(UINT qu)
 		for(UINT yu=0; yu<qu; yu++)
 		{
 			store[yu]=0.0f;
-		}	
+		}
 		varq=qu-1;
 		init=TRUE;
 	}
@@ -24,7 +23,7 @@ BOOL SVarStorage::CheckInit()
 
 BOOL SVarStorage::CheckVar(UINT no)
 {
-	return (init&&(varq>=no)); 
+	return (init&&(varq>=no));
 }
 
 BOOL SVarStorage::SetVar(UINT no, float dat)
