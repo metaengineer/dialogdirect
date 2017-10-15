@@ -295,7 +295,7 @@ SFrameChain::SFrameChain(LPCSTR fn)
 	this->flags=0;
 	this->back=NULL;
 	this->bg=NULL;
-	this->bglen=NULL;
+	this->bglen=0;
 	this->list=NULL;
 	this->tabs=NULL;
 	this->menu=NULL;

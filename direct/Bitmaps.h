@@ -20,6 +20,7 @@ public:
 	CBitmapTexture(LPCSTR FilePath, UINT format);
 	CBitmapTexture(LPCSTR FileNoExt); // any format
 	UINT GetInfo();
+        const DWORD *GetData();
 	LONG GetX();
 	LONG GetY();
 	HBITMAP GetBits();

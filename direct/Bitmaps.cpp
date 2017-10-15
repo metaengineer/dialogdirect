@@ -2,9 +2,12 @@
 #include <new>
 #include <cmath>
 #include <string>
+#include <iostream>
 
 BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 {
+	(*pImagex)=0;
+	(*pImagey)=0;
 	HANDLE hFile = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 	if(hFile == INVALID_HANDLE_VALUE)
 		return FALSE;
@@ -66,6 +69,86 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 		iImageSize=((*pImagex)*(*pImagey)) << 2;
 		break;
 	}
+	DWORD FieldR, FieldG, FieldB, FieldA;
+	WORD rMin, rMax, gMin, gMax, bMin, bMax, aMin, aMax;
+    bool aOff=false;
+    rMin=0; gMin=0; bMin=0; aMin=0;
+    rMax=0; gMax=0; bMax=0; aMax=0;
+	if(bmpinfohdr.biCompression==BI_BITFIELDS)
+    {
+        std::cout<<"Bitmap has weird format.\n";
+        ReadFile(hFile, &FieldR, sizeof(DWORD), &dwRead, NULL);
+        ReadFile(hFile, &FieldG, sizeof(DWORD), &dwRead, NULL);
+        ReadFile(hFile, &FieldB, sizeof(DWORD), &dwRead, NULL);
+        FieldA=~(FieldR|FieldG|FieldB);
+        DWORD rcopy=FieldR;
+        DWORD gcopy=FieldG;
+        DWORD bcopy=FieldB;
+        while(!(rcopy&1))
+        {
+            rcopy>>=1;
+            rMin++;
+        }
+        rMax=rMin;
+        while(rcopy&1)
+        {
+            rcopy>>=1;
+            rMax++;
+        }
+        while(!(gcopy&1))
+        {
+            gcopy>>=1;
+            gMin++;
+        }
+        gMax=gMin;
+        while(gcopy&1)
+        {
+            gcopy>>=1;
+            gMax++;
+        }
+        while(!(bcopy&1))
+        {
+            bcopy>>=1;
+            bMin++;
+        }
+        bMax=bMin;
+        while(bcopy&1)
+        {
+            bcopy>>=1;
+            bMax++;
+        }
+        rcopy=FieldR;
+        gcopy=FieldG;
+        bcopy=FieldB;
+        while((rcopy&1)||(gcopy&1)||(bcopy&1))
+        {
+            rcopy>>=1;
+            gcopy>>=1;
+            bcopy>>=1;
+            aMin++;
+        }
+        aMax=aMin;
+        if(rcopy||gcopy||bcopy)
+        {
+           while(!((rcopy|gcopy|bcopy)&1))
+           {
+              rcopy>>=1;
+              gcopy>>=1;
+              bcopy>>=1;
+              aMax++;
+           }
+        }
+        else
+            aOff=true;
+        std::cout<<"red is "<<rMin<<" to "<<rMax<<"\n";
+        std::cout<<"green is "<<gMin<<" to "<<gMax<<"\n";
+        std::cout<<"blue is "<<bMin<<" to "<<bMax<<"\n";
+        if(aOff)
+           std::cout<<"alpha is not present";
+        else
+           std::cout<<"alpha is "<<aMin<<" to "<<aMax<<"\n";
+    }
+
 	BYTE *buf;
 	try
 	{
@@ -73,17 +156,21 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 	}
 	catch(std::bad_alloc a)
 	{
+	    (*pImagex)=0; (*pImagey)=0;
 		CloseHandle(hFile);
 		return FALSE;
 	}
 	if(!ReadFile(hFile, buf, iImageSize, &dwRead, NULL))
 	{
+	    (*pImagex)=0; (*pImagey)=0;
 		delete[] buf;
 		CloseHandle(hFile);
 		return FALSE;
 	}
 	if(dwRead<iImageSize)
 	{
+		(*pImagex)=0;
+	    (*pImagey)=0;
 		delete[] buf;
 		CloseHandle(hFile);
 		return FALSE;
@@ -91,9 +178,13 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 
 	if(bmpinfohdr.biCompression!=BI_RGB)
 	{
-		delete[] buf;
-		CloseHandle(hFile);
-		return FALSE;
+		if(bmpinfohdr.biCompression!=BI_BITFIELDS)
+        {
+            (*pImagex)=0; (*pImagey)=0;
+	        delete[] buf;
+		    CloseHandle(hFile);
+		    return FALSE;
+        }
 	}
 	try
 	{
@@ -101,6 +192,7 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 	}
 	catch(std::bad_alloc t)
 	{
+	    (*pImagex)=0; (*pImagey)=0;
 		delete[] buf;
 		CloseHandle(hFile);
 		return FALSE;
@@ -209,18 +301,36 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 		DWORD* btSurf = *ppvData;
 		BYTE* imagebits = (BYTE*)(&buf[((*pImagey)-1)*bytesgiven]);
 
-		for (int i=0; i<(*pImagey); i++)
-		{
-			WORD* tlImage=(WORD*)imagebits;
-			for (int p=0; p<(*pImagex); p++)
-			{
-				*btSurf = (DWORD)(((*tlImage&31)<<3) | ((*tlImage&(31<<5))<<6) |
-					           ((*tlImage&(31<<10))<<9) | (0xFF<<24));
-				tlImage++;
-				btSurf++;
-			}
-			imagebits -= bytesgiven;
-		}
+		if(bmpinfohdr.biCompression!=BI_BITFIELDS)
+        {
+            for (int i=0; i<(*pImagey); i++)
+		    {
+			    WORD* tlImage=(WORD*)imagebits;
+			    for (int p=0; p<(*pImagex); p++)
+			    {
+                    *btSurf = (DWORD)(((*tlImage&31)<<3) | ((*tlImage&(31<<5))<<6) |
+                            ((*tlImage&(31<<10))<<9) | (0xFF<<24));
+				    tlImage++;
+				    btSurf++;
+                }
+			    imagebits -= bytesgiven;
+		    }
+        }
+        else
+        {
+            for (int i=0; i<(*pImagey); i++)
+		    {
+			    WORD* tlImage=(WORD*)imagebits;
+			    for (int p=0; p<(*pImagex); p++)
+			    {
+                    *btSurf = MAKELONG(MAKEWORD(((*tlImage)&FieldA)>>aMin,((*tlImage)&FieldR)>>rMin),
+                                MAKEWORD(((*tlImage)&FieldG)>>gMin,((*tlImage)&FieldB)>>bMin));
+				    tlImage++;
+				    btSurf++;
+                }
+			    imagebits -= bytesgiven;
+		    }
+        }
 		break;
 	}
 	case 24:
@@ -248,18 +358,37 @@ BOOL UtilLoadBitmap(LPCSTR path, DWORD **ppvData, LONG *pImagex, LONG *pImagey)
 		int bytesgiven=(*pImagex)<<2;
 		DWORD* btSurf = *ppvData;
 		BYTE* imagebits = (BYTE*)(&buf[((*pImagey)-1)*bytesgiven]);
-		for (int i=0; i<(*pImagey); i++)
-		{
-			RGBQUAD* tlImage=(RGBQUAD*)imagebits;
-			for (int p=0; p<(*pImagex); p++)
-			{
-				*btSurf = (DWORD)((tlImage->rgbBlue) | (tlImage->rgbGreen << 8) |
-					(tlImage->rgbRed << 16) | (tlImage->rgbReserved << 24));
-				tlImage++;
-				btSurf++;
-			}
-			imagebits -= bytesgiven;
-		}
+		if(bmpinfohdr.biCompression!=BI_BITFIELDS)
+        {
+            for (int i=0; i<(*pImagey); i++)
+		    {
+			    RGBQUAD* tlImage=(RGBQUAD*)imagebits;
+			    for (int p=0; p<(*pImagex); p++)
+			    {
+				    *btSurf = (DWORD)((tlImage->rgbBlue) | (tlImage->rgbGreen << 8) |
+				    	(tlImage->rgbRed << 16) | (tlImage->rgbReserved << 24));
+				    tlImage++;
+				    btSurf++;
+		    	}
+			    imagebits -= bytesgiven;
+		    }
+        }
+        else
+        {
+            for (int i=0; i<(*pImagey); i++)
+		    {
+			    DWORD* tlImage=(DWORD*)imagebits;
+			    for (int p=0; p<(*pImagex); p++)
+			    {
+				    *btSurf = MAKELONG(MAKEWORD(((*tlImage)&FieldA)>>aMin,((*tlImage)&FieldR)>>rMin),
+                                MAKEWORD(((*tlImage)&FieldG)>>gMin,((*tlImage)&FieldB)>>bMin));
+
+				    tlImage++;
+				    btSurf++;
+		    	}
+			    imagebits -= bytesgiven;
+		    }
+        }
 		break;
 	}
 	}
@@ -528,6 +657,11 @@ LONG CBitmapTexture::GetY()
 HBITMAP CBitmapTexture::GetBits()
 {
 	return OwnBitmap;
+}
+
+const DWORD *CBitmapTexture::GetData()
+{
+    return data1;
 }
 
 CBitmapTexture::~CBitmapTexture()
